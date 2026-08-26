@@ -1,52 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UnavO - India Food Rescue Network</title>
-<script src="https://cdn.tailwindcss.com"></script>
+  <title>UnavO - Stop Food Waste</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
+    .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
+    input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ccc; }
+    .btn-green { width: 100%; background: #16a34a; color: white; padding: 14px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+    .btn-orange { display: block; text-align: center; background: #f97316; color: white; padding: 14px; border-radius: 10px; font-weight: bold; text-decoration: none; margin-top: 20px; }
+  </style>
 </head>
-<body class="bg-gray-50">
-<header class="bg-white shadow p-4 flex justify-between items-center">
-  <h1 class="text-2xl font-bold text-green-600">UnavO</h1>
-  <span class="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full">Pan-India Live</span>
-</header>
+<body>
+  <div class="card">
+    <h2>Donate Leftover Food - FREE</h2>
+    <input type="text" id="foodName" placeholder="Food Name (ex: 50 plate biryani)" value="bread">
+    <input type="text" id="city" placeholder="City (ex: Trichy)" value="trichy">
+    <input type="tel" id="phone" placeholder="Your Phone Number" value="8825461353">
+    
+    <!-- POST FOOD BUTTON -->
+    <button class="btn-green" onclick="postFood()">Post Food Now - FREE</button>
 
-<section class="text-center p-8">
-  <h2 class="text-4xl md:text-5xl font-bold">Stop Food Waste. <br><span class="text-green-600">Feed People Across India.</span></h2>
-  <p class="mt-4 text-gray-600 max-w-2xl mx-auto">A platform to connect food donors (Hotels, Marriages, Mess) with NGOs and volunteers in any city. Post in 10 sec.</p>
+    <hr style="margin: 30px 0;">
 
-<div class="mt-8 bg-white max-w-2xl mx-auto p-6 rounded-2xl shadow-lg border-2 border-dashed border-green-500">
-  <h3 class="font-bold text-xl">Are you a Food Donor?</h3>
-  <input id="food" class="w-full mt-4 p-3 border rounded-lg" placeholder="What food do you have? Ex: 50 Plates Biryani">
-  <input id="city" class="w-full mt-3 p-3 border rounded-lg" placeholder="Your City & Area? Ex: Chennai, T Nagar">
-  <input id="phone" class="w-full mt-3 p-3 border rounded-lg" placeholder="Phone Number">
-  <button onclick="sendWA()" class="w-full mt-4 bg-green-600 text-white p-3 rounded-lg font-bold text-lg">Post Food Now - FREE</button>
-  <p class="text-xs text-gray-400 mt-2">Clicking will send details to UnavO WhatsApp 8825461353</p>
-</div>
-</section>
-
-<section class="p-6">
-<div class="bg-black text-white p-8 rounded-2xl text-center max-w-3xl mx-auto">
-<h2 class="text-3xl font-bold">Become a City Partner</h2>
-<p class="mt-2 text-gray-300">Manage your city, earn 20% per pickup. India's food rescue needs you.</p>
-<a href="https://wa.me/918825461353?text=Hi%20UnavO%20I%20want%20to%20be%20City%20Partner%20Rs299" target="_blank" class="block mt-6 bg-orange-500 p-4 rounded-lg font-bold text-center">Join Now - Rs 299/mo</a>
-</div>
-</section>
+    <h3>Become City Partner - Rs 299</h3>
+    <p>Earn by connecting hotels & NGOs</p>
+    
+    <!-- JOIN NOW BUTTON - PAYMENT -->
+    <a class="btn-orange" href="upi://pay?pa=8825461353@okaxis&pn=UnavO&am=299&cu=INR&tn=City%20Partner%20Fee">Join Now - Rs 299</a>
+    <p style="font-size:12px; text-align:center; margin-top:10px;">Clicking will open GPay / PhonePe</p>
+  </div>
 
 <script>
-function sendWA(){
-let food=document.getElementById('food').value;
-let city=document.getElementById('city').value;
-let phone=document.getElementById('phone').value;
-if(food=='' || city==''){
- alert('Dei Food & City ah fill pannu da!');
- return;
-}
-let msg=`*NEW FOOD DONATION - UnavO*%0A%0AFood: ${food}%0ACity: ${city}%0APhone: ${phone}%0A%0AWebsite: unavo-gamma.vercel.app`;
-window.open(`https://wa.me/918825461353?text=${msg}`,'_blank');
+function postFood() {
+  var food = document.getElementById('foodName').value;
+  var city = document.getElementById('city').value;
+  var phone = document.getElementById('phone').value;
+
+  if(!food || !city || !phone) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  var myWhatsAppNumber = "918825461353";
+  var message = `*NEW FOOD DONATION - UnavO*%0A%0AFood: ${food}%0ACity: ${city}%0APhone: ${phone}%0AWebsite: unavo-gamma.vercel.app`;
+
+  var whatsappUrl = `https://wa.me/${myWhatsAppNumber}?text=${message}`;
+  window.open(whatsappUrl, '_blank');
 }
 </script>
-
 </body>
 </html>
