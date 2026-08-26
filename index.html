@@ -62,56 +62,55 @@ input, select{width:92%; padding:13px; margin:6px 0 12px 0; border-radius:10px; 
 </div>
 
 <div class="card">
-<h2 style="margin:0; text-align:center;">🍱 Post Available Food</h2>
+<h2 style="margin:0; text-align:center;">Post Available Food</h2>
 <p style="text-align:center; font-size:12px; color:#666;">Fill details, food will go LIVE instantly</p>
-<label>🍛 Food Name</label><input type="text" id="foodName" placeholder="Ex: Veg Biryani, Curd Rice">
-<label>🔢 Quantity</label><input type="text" id="qty" placeholder="Ex: 30 Plates">
-<label>⏰ Prepared Time</label><input type="time" id="prepTime">
-<label>⌛ Must Collect Before</label><input type="time" id="expiryTime">
-<label>🥗 Food Type</label><select id="type"><option>Pure Veg 🟢</option><option>Non-Veg 🔴</option></select>
-<label>📍 Pickup Location</label><input type="text" id="address" placeholder="Hotel Name, Trichy">
-<label>📞 Your WhatsApp Number</label><input type="tel" id="phone" placeholder="98xxxxxxxx">
-<button class="btn btn-green" onclick="postFood()">🚀 Post Food - Go LIVE Now</button>
+<label>Food Name</label><input type="text" id="foodName" placeholder="Ex: Veg Biryani, Curd Rice">
+<label>Quantity</label><input type="text" id="qty" placeholder="Ex: 30 Plates">
+<label>Prepared Time</label><input type="time" id="prepTime">
+<label>Must Collect Before</label><input type="time" id="expiryTime">
+<label>Food Type</label><select id="type"><option>Pure Veg</option><option>Non-Veg</option></select>
+<label>Pickup Location</label><input type="text" id="address" placeholder="Hotel Name, Trichy">
+<label>Your WhatsApp Number</label><input type="tel" id="phone" placeholder="98xxxxxxxx">
+<button class="btn btn-green" onclick="postFood()">Post Food - Go LIVE Now</button>
 <p id="successMsg" style="text-align:center; color:#16a34a; font-weight:700;"></p>
 </div>
 
 <div class="card">
-<h3 style="color:#dc2626; margin:0; text-align:center;">🔴 LIVE - Food Available Now</h3>
+<h3 style="color:#dc2626; margin:0; text-align:center;">LIVE - Food Available Now</h3>
 <div id="liveFeed"><p style="text-align:center; color:#888; font-size:13px;">No food available right now. Be the first to post!</p></div>
 </div>
 
 <div class="card" style="text-align:center;">
 <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=300" style="width:100%; height:140px; object-fit:cover; border-radius:12px;">
-<h3 style="margin:12px 0 5px 0;">Become a City Partner 💼</h3>
+<h3 style="margin:12px 0 5px 0;">Become a City Partner</h3>
 <p style="font-size:13px; color:#555; margin:0;">Earn Rs 15k/month. Manage your city. We give you hotels & NGOs.</p>
 <h2 style="color:#f97316;">Rs 299 Only</h2>
 
 <div class="manual-pay">
 <p style="margin:0; font-weight:800; color:#15803d;">✅ 100% Working Payment Method:</p>
-<p style="font-size:13px; margin:10px 0; line-height:1.6;">
+<p style="font-size:13px; margin:10px 0; line-height:1.7;">
 1. Open <b>GPay / PhonePe</b><br>
 2. Click <b>Pay Phone Number</b><br>
 3. Enter Number: <span style="background:yellow; padding:3px 8px; font-size:18px; font-weight:bold; border-radius:6px;">8825461353</span><br>
-4. Enter Amount: <b>Rs 299</b> & Pay<br>
+4. Enter Amount: <b>Rs 299</b> and Pay<br>
 </p>
-<p style="font-size:11px; margin:0; color:#555;">This number is linked to Harini GPay (harinisubramaniyan008@oksbi). Direct number pay ku Bank Name error varathu!</p>
+<p style="font-size:11px; margin:0; color:#333;">This number is linked to GPay ID: harinisubramaniyan008@oksbi. Paying to phone number will not show bank loading error.</p>
 </div>
 
 <div class="qr-box">
-<p style="font-weight:700; margin:0 0 10px 0;">Or Scan QR (Backup)</p>
+<p style="font-weight:700; margin:0 0 10px 0;">Or Scan QR (Backup Option)</p>
 <img id="qrImg" src="" width="170" height="170" style="background:white; padding:8px; border-radius:10px;">
-<p style="font-size:11px; margin-top:8px;">UPI: <b>harinisubramaniyan008@oksbi</b></p>
-<p style="font-size:10px; color:#b45309;">If QR says "Could not load bank", use phone number method above - 100% work aagum!</p>
+<p style="font-size:11px; margin-top:8px;">UPI ID: <b>harinisubramaniyan008@oksbi</b></p>
+<p style="font-size:10px; color:#b45309;">If QR shows "Could not load banking name", please use the phone number method above.</p>
 </div>
 
-<button class="btn btn-green" onclick="openProof()">I Paid Rs 299 - Submit Proof ✅</button>
+<button class="btn btn-green" onclick="openProof()">I Paid Rs 299 - Submit Proof</button>
 
 <div id="proofSection" style="text-align:left;">
 <label>Enter 12-digit UTR / Transaction ID *</label>
-<input type="text" id="utr" placeholder="GPay > History > Check Transaction">
-<p style="font-size:10px; color:#666; margin:0;">GPay open panni recent payment click pannu, anga UTR irukkum.</p>
-<button class="btn" style="background:#111; color:white; margin-top:12px;" onclick="paidDone()">Verify & Send Proof to Admin</button>
-<p style="font-size:10px; color:red; text-align:center; margin-top:8px;">Fraud protection: UTR mandatory. Fake proofs blocked.</p>
+<input type="text" id="utr" placeholder="Check GPay > History > Transaction">
+<button class="btn" style="background:#111; color:white; margin-top:12px;" onclick="paidDone()">Verify and Send Proof</button>
+<p style="font-size:10px; color:red; text-align:center; margin-top:8px;">UTR is mandatory for verification. Fake proofs will be rejected.</p>
 </div>
 
 </div>
@@ -132,18 +131,18 @@ function getFoodImage(name){
 
 function postFood(){
   const food=document.getElementById('foodName').value, qty=document.getElementById('qty').value, prep=document.getElementById('prepTime').value, expiry=document.getElementById('expiryTime').value, type=document.getElementById('type').value, address=document.getElementById('address').value, phone=document.getElementById('phone').value;
-  if(!food||!qty||!expiry||!address||!phone){alert("Please fill all fields da"); return;}
+  if(!food||!qty||!expiry||!address||!phone){alert("Please fill all fields"); return;}
   const data={food, qty, prep, expiry, type, address, phone, time:new Date().toLocaleTimeString(), img:getFoodImage(food)};
   showLive(data);
   let saved=JSON.parse(localStorage.getItem('unavo_food')||'[]'); saved.unshift(data); localStorage.setItem('unavo_food', JSON.stringify(saved));
-  const msg=`🍱 NEW FOOD - UnavO%0AFood: ${food}%0AQty: ${qty}%0ABefore: ${expiry}%0AAddr: ${address}%0APhone: ${phone}`;
-  window.open(`https://wa.me/918825461353?text=${msg}`, '_blank');
-  document.getElementById('successMsg').innerText="✅ LIVE! Your food is now visible!";
+  const msg=`NEW FOOD - UnavO - Food: ${food} - Qty: ${qty} - Before: ${expiry} - Addr: ${address} - Phone: ${phone}`;
+  window.open(`https://wa.me/918825461353?text=${encodeURIComponent(msg)}`, '_blank');
+  document.getElementById('successMsg').innerText="LIVE! Your food is now visible!";
 }
 
 function showLive(d){
   const div=document.createElement('div'); div.className='live-card';
-  div.innerHTML=`<img src="${d.img}"><div style="text-align:left; flex:1;"><b>🍱 ${d.food}</b> - ${d.qty}<br><small>${d.type} | Before <b style="color:red;">${d.expiry}</b></small><br><small>📍 ${d.address}</small><br><small>📞 ${d.phone}</small></div>`;
+  div.innerHTML=`<img src="${d.img}"><div style="text-align:left; flex:1;"><b>${d.food}</b> - ${d.qty}<br><small>${d.type} | Before <b style="color:red;">${d.expiry}</b></small><br><small>${d.address}</small><br><small>${d.phone}</small></div>`;
   document.getElementById('liveFeed').prepend(div);
 }
 
@@ -154,10 +153,9 @@ function openProof(){
 
 function paidDone(){
   const utr=document.getElementById('utr').value.trim();
-  if(utr.length<8){alert("UTR correct ah podu da! GPay history la check pannu!"); return;}
-  const msg=`*City Partner - PAYMENT PROOF*%0A%0APaid Rs 299 to Harini GPay%0AUPI: ${upiId}%0AUTR: ${utr}%0APhone: 8825461353%0A%0APlease verify and confirm.`;
-  window.open(`https://wa.me/918825461353?text=${msg}`, '_blank');
-  alert("Proof sent da! Admin 10 mins la confirm pannuvanga!");
+  if(utr.length<8){alert("Please enter a valid UTR number from GPay history."); return;}
+  const msg=`City Partner Payment Proof - Paid Rs 299 to ${upiId} - Phone: 8825461353 - UTR: ${utr} - Please verify.`;
+  window.open(`https://wa.me/918825461353?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
 window.onload=()=>{ JSON.parse(localStorage.getItem('unavo_food')||'[]').forEach(showLive); }
