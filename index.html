@@ -8,49 +8,56 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{font-family:'Poppins', sans-serif; box-sizing:border-box;}
-body{margin:0; background:#fffbeb; }
+body{margin:0; background:#fffbeb; overflow-x:hidden;}
+/* ANIMATED GRADIENT HERO */
 .hero{
-  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800');
-  background-size:cover; background-position:center;
-  color:white; padding:70px 20px 50px 20px; text-align:center;
+  background: linear-gradient(-45deg, #000000, #16a34a, #000000, #14532d);
+  background-size:400% 400%; animation:gradientMove 10s ease infinite;
+  color:white; padding:75px 20px 60px 20px; text-align:center; position:relative;
 }
-.hero h1{font-size:38px; margin:0; line-height:1.1; font-weight:800;}
-.hero p{font-size:14px; opacity:0.9; margin-top:12px; max-width:340px; margin-left:auto; margin-right:auto;}
-.hero-badge{background:#16a34a; display:inline-block; padding:6px 14px; border-radius:20px; font-size:11px; font-weight:700; margin-bottom:12px; letter-spacing:0.5px;}
-.container{padding:16px; max-width:500px; margin:auto; margin-top:-30px;}
-.card{background:white; padding:20px; border-radius:22px; box-shadow:0 10px 30px rgba(0,0,0,0.08); margin-bottom:16px;}
-.steps{display:flex; gap:10px; justify-content:space-between; text-align:center; margin:18px 0 5px 0;}
-.step{flex:1; background:#f0fdf4; padding:12px 6px; border-radius:14px; border:1px solid #bbf7d0;}
-.step img{width:48px; height:48px; border-radius:12px; object-fit:cover;}
-.step p{font-size:10px; font-weight:700; margin:6px 0 0 0; line-height:1.2;}
-label{font-weight:600; font-size:12px; margin-top:12px; display:block; color:#1f2937;}
-input, select{width:100%; padding:13px 14px; margin:6px 0 12px 0; border-radius:12px; border:1.5px solid #e5e7eb; background:#f9fafb; font-size:14px; outline:none;}
-input:focus{border-color:#16a34a; background:white;}
-.btn{width:100%; padding:15px; border:none; border-radius:14px; font-size:15px; font-weight:700; cursor:pointer; margin-top:10px; transition:0.2s;}
-.btn-green{background:linear-gradient(135deg,#16a34a,#15803d); color:white; box-shadow:0 6px 18px rgba(22,163,74,0.3);}
-.btn:active{transform:scale(0.97);}
-.live-card{display:flex; gap:12px; background:white; border:1.5px solid #bbf7d0; padding:12px; border-radius:16px; margin-top:12px; align-items:center; animation:pop 0.4s ease;}
-@keyframes pop{0%{transform:scale(0.9); opacity:0;} 100%{transform:scale(1); opacity:1;}}
-.live-card img{width:75px; height:75px; border-radius:14px; object-fit:cover;}
-.live-info{flex:1; text-align:left;}
-.live-info b{font-size:15px;}
-.call-row{display:flex; gap:8px; margin-top:8px;}
-.call-btn{background:#16a34a; color:white; padding:6px 12px; border-radius:20px; font-size:12px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:5px;}
-.wa-btn{background:#25D366; color:white; padding:6px 12px; border-radius:20px; font-size:12px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:5px;}
-.qr-box{text-align:center; background:linear-gradient(135deg,#fff7ed,#ffedd5); padding:18px; border-radius:16px; border:1.5px dashed #fb923c;}
-.stat-row{display:flex; gap:10px; margin-top:18px;}
-.stat{flex:1; text-align:center; background:rgba(255,255,255,0.15); backdrop-filter:blur(5px); padding:10px; border-radius:12px; border:1px solid rgba(255,255,255,0.2);}
-.stat b{font-size:18px; display:block;}
-.manual-box{background:#dcfce7; padding:14px; border-radius:12px; border:2px solid #16a34a; text-align:left;}
-#proofSection{display:none; background:#fffbeb; padding:15px; border-radius:12px; border:1.5px dashed #f59e0b; margin-top:15px;}
+@keyframes gradientMove{0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}}
+.hero-badge{background:#16a34a; display:inline-block; padding:7px 16px; border-radius:20px; font-size:11px; font-weight:700; margin-bottom:14px; animation:float 2.5s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)}}
+.hero h1{font-size:40px; margin:0; line-height:1.05; font-weight:800; animation:slideUp 0.8s ease;}
+@keyframes slideUp{from{transform:translateY(30px); opacity:0} to{transform:translateY(0); opacity:1}}
+.hero p{font-size:14px; opacity:0.9; margin-top:12px; animation:slideUp 1s ease;}
+.container{padding:16px; max-width:500px; margin:auto; margin-top:-35px; position:relative; z-index:2;}
+.card{background:white; padding:20px; border-radius:24px; box-shadow:0 12px 35px rgba(0,0,0,0.09); margin-bottom:16px; animation:cardIn 0.6s ease; border:1px solid #fef3c7;}
+@keyframes cardIn{from{transform:translateY(20px); opacity:0} to{transform:translateY(0); opacity:1}}
+.steps{display:flex; gap:10px; margin:18px 0 5px 0;}
+.step{flex:1; background:#f0fdf4; padding:12px 6px; border-radius:16px; border:1px solid #bbf7d0; transition:0.3s;}
+.step:hover{transform:translateY(-4px) scale(1.03); box-shadow:0 6px 15px rgba(22,163,74,0.2);}
+.step img{width:50px; height:50px; border-radius:12px; object-fit:cover;}
+.step p{font-size:10px; font-weight:700; margin:6px 0 0 0;}
+label{font-weight:600; font-size:11px; margin-top:12px; display:block; color:#374151; letter-spacing:0.3px; text-transform:uppercase;}
+input, select{width:100%; padding:14px; margin:6px 0 12px 0; border-radius:14px; border:1.5px solid #e5e7eb; background:#f9fafb; font-size:14px; transition:0.2s; outline:none;}
+input:focus{border-color:#16a34a; background:white; box-shadow:0 0 0 4px rgba(22,163,74,0.15); transform:scale(1.01);}
+.btn{width:100%; padding:16px; border:none; border-radius:16px; font-size:15px; font-weight:800; cursor:pointer; margin-top:10px; position:relative; overflow:hidden;}
+.btn-green{background:linear-gradient(135deg,#16a34a,#15803d); color:white; box-shadow:0 8px 22px rgba(22,163,74,0.35); animation:pulse 2s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(22,163,74,0.5)} 70%{box-shadow:0 0 0 12px rgba(22,163,74,0)} 100%{box-shadow:0 0 0 0 rgba(22,163,74,0)}}
+.btn-green::after{content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation:shimmer 2.5s infinite;}
+@keyframes shimmer{100%{left:100%}}
+.live-dot{width:10px; height:10px; background:#ef4444; border-radius:50%; display:inline-block; animation:blink 1s infinite; box-shadow:0 0 8px #ef4444;}
+@keyframes blink{0%,100%{opacity:1; transform:scale(1)} 50%{opacity:0.5; transform:scale(1.2)}}
+.live-card{display:flex; gap:12px; background:white; border:1.5px solid #bbf7d0; padding:14px; border-radius:18px; margin-top:14px; align-items:center; animation:pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+@keyframes pop{0%{transform:scale(0.8) translateY(20px); opacity:0} 100%{transform:scale(1) translateY(0); opacity:1}}
+.live-card img{width:78px; height:78px; border-radius:16px; object-fit:cover;}
+.call-row{display:flex; gap:8px; margin-top:10px;}
+.call-btn{background:#111; color:white; padding:7px 14px; border-radius:24px; font-size:12px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:6px; animation:bounceBtn 2s infinite;}
+@keyframes bounceBtn{0%,100%{transform:translateY(0)} 50%{transform:translateY(-2px)}}
+.wa-btn{background:#25D366; color:white; padding:7px 14px; border-radius:24px; font-size:12px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:6px;}
+.stat-row{display:flex; gap:10px; margin-top:20px;}
+.stat{flex:1; text-align:center; background:rgba(255,255,255,0.15); backdrop-filter:blur(8px); padding:10px; border-radius:14px; border:1px solid rgba(255,255,255,0.2);}
+.manual-box{background:linear-gradient(135deg,#dcfce7,#f0fdf4); padding:14px; border-radius:14px; border:2px solid #16a34a;}
+.qr-box{text-align:center; background:linear-gradient(135deg,#fff7ed,#ffedd5); padding:18px; border-radius:18px; border:1.5px dashed #fb923c;}
 </style>
 </head>
 <body>
 
 <div class="hero">
-<div class="hero-badge"><i class="fa-solid fa-recycle"></i> 1,200+ MEALS SAVED THIS MONTH</div>
-<h1>Turn Your<br>Extra Food<br>Into Hope</h1>
-<p>Hotels post surplus food. Our partners deliver it to orphanages & old age homes in 30 mins.</p>
+<div class="hero-badge"><i class="fa-solid fa-leaf"></i> 1,200+ MEALS SAVED - JOIN NOW</div>
+<h1>Turn Your<br>Waste Into<br>Hope</h1>
+<p>Post surplus food in 10 sec. We deliver to orphanages in 30 mins. Zero waste.</p>
 <div class="stat-row">
 <div class="stat"><b>350+</b><small>Hotels</small></div>
 <div class="stat"><b>120+</b><small>NGOs</small></div>
@@ -61,127 +68,74 @@ input:focus{border-color:#16a34a; background:white;}
 <div class="container">
 
 <div class="card">
-<h3 style="text-align:center; margin:0 0 14px 0; font-size:16px;"><i class="fa-solid fa-bolt" style="color:#f59e0b;"></i> How UnavO Works?</h3>
+<h3 style="text-align:center; margin:0 0 14px 0;">How It Works in 30 Sec <i class="fa-solid fa-bolt" style="color:#f59e0b;"></i></h3>
 <div class="steps">
-<div class="step"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=200"><p>1. Hotel Posts Food</p></div>
-<div class="step"><img src="https://images.unsplash.com/photo-1526367790999-015f668a3e3b?w=200"><p>2. We Collect Fast</p></div>
-<div class="step"><img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=200"><p>3. NGO Feeds People</p></div>
+<div class="step"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=200"><p>Hotel Posts</p></div>
+<div class="step"><img src="https://images.unsplash.com/photo-1526367790999-015f668a3e3b?w=200"><p>We Collect</p></div>
+<div class="step"><img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=200"><p>NGO Feeds</p></div>
 </div>
 </div>
 
 <div class="card">
-<h2 style="margin:0; text-align:center; font-size:18px;">Post Available Food</h2>
-<p style="text-align:center; font-size:11px; color:#6b7280; margin-top:4px;">Your post will go LIVE instantly to all NGOs</p>
-<label>Food Name</label><input type="text" id="foodName" placeholder="Ex: Veg Biryani, Curd Rice">
-<label>Quantity</label><input type="text" id="qty" placeholder="Ex: 30 Plates">
-<label>Prepared Time</label><input type="time" id="prepTime">
-<label>Must Collect Before</label><input type="time" id="expiryTime">
+<h2 style="margin:0; text-align:center; font-size:18px;">Post Available Food <i class="fa-solid fa-utensils"></i></h2>
+<label>Food Name</label><input type="text" id="foodName" placeholder="Ex: Veg Biryani">
+<label>Quantity</label><input type="text" id="qty" placeholder="Ex: 50 plates">
+<label>Collect Before</label><input type="time" id="expiryTime">
 <label>Food Type</label><select id="type"><option>Pure Veg</option><option>Non-Veg</option></select>
 <label>Pickup Location</label><input type="text" id="address" placeholder="Hotel Name, Trichy">
 <label>Your WhatsApp Number</label><input type="tel" id="phone" placeholder="98xxxxxxxxxx">
 <button class="btn btn-green" onclick="postFood()"><i class="fa-solid fa-rocket"></i> Post Food - Go LIVE Now</button>
-<p id="successMsg" style="text-align:center; color:#16a34a; font-weight:700; font-size:13px;"></p>
+<p id="successMsg" style="text-align:center; color:#16a34a; font-weight:800; font-size:13px;"></p>
 </div>
 
 <div class="card">
-<h3 style="color:#dc2626; margin:0; text-align:center; font-size:15px;"><i class="fa-solid fa-circle" style="font-size:10px; animation:blink 1s infinite;"></i> LIVE - Food Available Now</h3>
+<h3 style="margin:0; text-align:center; font-size:15px;"><span class="live-dot"></span> LIVE - Food Available Now</h3>
 <div id="liveFeed"></div>
-<p id="emptyMsg" style="text-align:center; color:#9ca3af; font-size:12px; margin-top:15px;">No food available right now. Be the first to post!</p>
+<p id="emptyMsg" style="text-align:center; color:#9ca3af; font-size:12px; margin-top:12px;">No food now. Be the first to post!</p>
 </div>
 
 <div class="card" style="text-align:center;">
-<h3 style="margin:0 0 5px 0;">Become a City Partner <i class="fa-solid fa-briefcase"></i></h3>
-<p style="font-size:12px; color:#6b7280; margin:0;">Earn Rs 15k/month. Manage your city operations.</p>
-<h2 style="color:#f97316; margin:10px 0;">Rs 299 Only</h2>
-
-<div class="manual-box">
-<p style="margin:0; font-weight:800; color:#15803d; font-size:12px;">100% Working Payment Method:</p>
-<p style="font-size:12px; margin:8px 0; line-height:1.6;">
-1. Open GPay / PhonePe<br>
-2. Click Pay Phone Number<br>
-3. Enter: <b style="background:yellow; padding:2px 6px; border-radius:4px;">8825461353</b><br>
-4. Pay Rs 299
-</p>
-<p style="font-size:10px; margin:0; color:#555;">Linked to UPI: harinisubramaniyan008@oksbi</p>
+<h3 style="margin:0;">Become City Partner <i class="fa-solid fa-crown" style="color:#f59e0b;"></i></h3>
+<p style="font-size:12px; color:#6b7280;">Earn Rs 15k/month</p>
+<h2 style="color:#f97316; margin:8px 0;">Rs 299 Only</h2>
+<div class="manual-box" style="text-align:left; margin-bottom:12px;">
+<p style="margin:0; font-weight:800; color:#15803d; font-size:12px;">Payment - 100% Working:</p>
+<p style="font-size:12px; margin:6px 0;">Pay to Number: <b style="background:yellow; padding:2px 6px; border-radius:4px;">8825461353</b><br>UPI: harinisubramaniyan008@oksbi</p>
 </div>
-
 <div class="qr-box">
-<p style="font-weight:700; margin:0 0 10px 0; font-size:13px;">Or Scan QR (Backup)</p>
 <img id="qrImg" src="" width="160" height="160" style="background:white; padding:8px; border-radius:12px;">
-<p style="font-size:10px; margin-top:8px;">UPI ID: <b>harinisubramaniyan008@oksbi</b></p>
 </div>
-
-<button class="btn btn-green" onclick="openProof()" style="margin-top:15px;">I Paid Rs 299 - Submit Proof <i class="fa-solid fa-check"></i></button>
-
-<div id="proofSection" style="text-align:left;">
-<label>Enter UTR / Transaction ID *</label>
-<input type="text" id="utr" placeholder="From GPay History">
-<button class="btn" style="background:#111; color:white;" onclick="paidDone()">Verify and Send Proof</button>
+<button class="btn" style="background:#111; color:white; margin-top:12px;" onclick="openProof()">I Paid - Submit Proof</button>
+<div id="proofSection" style="display:none; margin-top:12px; text-align:left;">
+<input type="text" id="utr" placeholder="Enter UTR / Transaction ID">
+<button class="btn btn-green" onclick="paidDone()">Verify</button>
 </div>
 </div>
 
 </div>
 
-<style>@keyframes blink{0%{opacity:1;} 50%{opacity:0;} 100%{opacity:1;}}</style>
 <script>
 var upiId = "harinisubramaniyan008@oksbi";
 document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=${upiId}&pn=Harini&am=299&cu=INR`;
-
-function getFoodImage(name){
-  name = name.toLowerCase();
-  if(name.includes('biryani') || name.includes('biriyani')) return 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400';
-  if(name.includes('rice')) return 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400';
-  if(name.includes('curd')) return 'https://images.unsplash.com/photo-1482049016688-2d3e1b31122f?w=400';
-  return 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400';
-}
-
-window.onload = function(){ 
-  var saved = JSON.parse(localStorage.getItem('unavo_food_v2') || '[]');
-  saved.forEach(showLive);
-  if(saved.length > 0) document.getElementById('emptyMsg').style.display='none';
-}
-
-function postFood() {
-  var food = document.getElementById('foodName').value;
-  var qty = document.getElementById('qty').value;
-  var expiry = document.getElementById('expiryTime').value;
-  var type = document.getElementById('type').value;
-  var address = document.getElementById('address').value;
-  var phone = document.getElementById('phone').value;
-  if(!food || !qty || !expiry || !address || !phone){ alert("Please fill all required fields"); return; }
-  var data = {food: food, qty: qty, expiry: expiry, type: type, address: address, phone: phone, img: getFoodImage(food)};
+function getFoodImage(n){ n=n.toLowerCase(); if(n.includes('biryani')||n.includes('biriyani')) return 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400'; if(n.includes('rice')) return 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400'; return 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400'; }
+window.onload = function(){ var s=JSON.parse(localStorage.getItem('unavo_food_v3')||'[]'); s.forEach(showLive); if(s.length>0) document.getElementById('emptyMsg').style.display='none'; }
+function postFood(){
+  var food=document.getElementById('foodName').value, qty=document.getElementById('qty').value, expiry=document.getElementById('expiryTime').value, type=document.getElementById('type').value, address=document.getElementById('address').value, phone=document.getElementById('phone').value;
+  if(!food||!qty||!expiry||!address||!phone){alert("Fill all fields"); return;}
+  var data={food:food, qty:qty, expiry:expiry, type:type, address:address, phone:phone, img:getFoodImage(food)};
   showLive(data);
-  var saved = JSON.parse(localStorage.getItem('unavo_food_v2') || '[]');
-  saved.unshift(data);
-  localStorage.setItem('unavo_food_v2', JSON.stringify(saved));
+  var saved=JSON.parse(localStorage.getItem('unavo_food_v3')||'[]'); saved.unshift(data); localStorage.setItem('unavo_food_v3', JSON.stringify(saved));
   document.getElementById('emptyMsg').style.display='none';
-  document.getElementById('successMsg').innerText = "✅ LIVE! Food posted successfully!";
+  document.getElementById('successMsg').innerText="🔥 BOOM! Your food is LIVE now!";
+  if(navigator.vibrate) navigator.vibrate(100);
 }
-
 function showLive(d){
-  var div = document.createElement('div');
-  div.className = 'live-card';
-  div.innerHTML = `
-    <img src="${d.img}">
-    <div class="live-info">
-      <b>${d.food}</b> - ${d.qty}<br>
-      <small>${d.type} | Before <b style="color:red;">${d.expiry}</b></small><br>
-      <small style="color:#6b7280;"><i class="fa-solid fa-location-dot"></i> ${d.address}</small>
-      <div class="call-row">
-        <a href="tel:+91${d.phone}" class="call-btn"><i class="fa-solid fa-phone"></i> Call</a>
-        <a href="https://wa.me/91${d.phone}?text=Hi, I want to collect your food - ${d.food}" target="_blank" class="wa-btn"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-      </div>
-    </div>`;
+  var div=document.createElement('div'); div.className='live-card';
+  div.innerHTML=`<img src="${d.img}"><div style="flex:1; text-align:left;"><b>${d.food}</b> - ${d.qty}<br><small>${d.type} | Before <b style="color:red;">${d.expiry}</b></small><br><small><i class="fa-solid fa-location-dot"></i> ${d.address}</small><div class="call-row"><a href="tel:+91${d.phone}" class="call-btn"><i class="fa-solid fa-phone"></i> Call</a><a href="https://wa.me/91${d.phone}" class="wa-btn"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a></div></div>`;
   document.getElementById('liveFeed').prepend(div);
 }
-
-function openProof(){ document.getElementById('proofSection').style.display = 'block'; }
-function paidDone(){
-  var utr = document.getElementById('utr').value.trim();
-  if(utr.length < 8){ alert("Enter valid UTR number"); return; }
-  var msg = `City Partner Payment Proof - Paid Rs 299 to ${upiId} - UTR: ${utr}`;
-  window.open(`https://wa.me/918825461353?text=${encodeURIComponent(msg)}`, '_blank');
-}
+function openProof(){ document.getElementById('proofSection').style.display='block'; }
+function paidDone(){ var u=document.getElementById('utr').value; if(u.length<8){alert("Enter valid UTR"); return;} window.open(`https://wa.me/918825461353?text=Paid Rs 299 UTR: ${u}`, '_blank'); }
 </script>
 </body>
 </html>
