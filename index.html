@@ -3,18 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UnavO - Live Food</title>
+<title>UnavO - Fraud Proof</title>
 <style>
 body{font-family:sans-serif; margin:0; background:#fff8f0; text-align:center;}
-.header{background:#16a34a; color:white; padding:20px; font-size:24px; font-weight:bold;}
+.header{background:#16a34a; color:white; padding:20px; font-size:22px; font-weight:bold;}
 .container{padding:15px; max-width:500px; margin:auto;}
 .card{background:white; padding:20px; border-radius:15px; box-shadow:0 2px 10px rgba(0,0,0,0.1); text-align:left; margin-bottom:20px;}
 label{font-weight:bold; font-size:14px; margin-top:10px; display:block;}
 input, select{width:92%; padding:12px; margin:6px 0 12px 0; border-radius:8px; border:1px solid #ccc;}
-.btn{width:100%; padding:16px; border:none; border-radius:12px; font-size:18px; font-weight:bold; cursor:pointer; margin-top:10px;}
+.btn{width:100%; padding:16px; border:none; border-radius:12px; font-size:16px; font-weight:bold; cursor:pointer; margin-top:10px;}
 .btn-green{background:#16a34a; color:white;}
-.live-card{background:#e6ffed; border:2px solid #16a34a; padding:15px; border-radius:12px; margin-top:10px; text-align:left;}
+.btn-orange{background:#f97316; color:white;}
+.live-card{background:#e6ffed; border:2px solid #16a34a; padding:12px; border-radius:12px; margin-top:10px; text-align:left;}
 .qr-box{text-align:center; background:#f9fafb; padding:15px; border-radius:12px; margin:15px 0;}
+#proofSection{display:none; background:#fff3cd; padding:15px; border-radius:12px; border:1px dashed #f97316; margin-top:15px;}
 </style>
 </head>
 <body>
@@ -29,38 +31,46 @@ input, select{width:92%; padding:12px; margin:6px 0 12px 0; border-radius:8px; b
 <label>Collect Before</label><input type="time" id="expiryTime">
 <label>Veg / Non-Veg</label><select id="type"><option>Pure Veg</option><option>Non-Veg</option></select>
 <label>Pickup Address</label><input type="text" id="address" placeholder="Hotel Name, Trichy">
-<label>Your Phone Number</label><input type="tel" id="phone" placeholder="Your Number">
+<label>Your Phone</label><input type="tel" id="phone" placeholder="Your Number">
 <button class="btn btn-green" onclick="postFood()">Post Food - Share LIVE</button>
 <p id="successMsg" style="text-align:center; color:green; font-weight:bold;"></p>
 </div>
 
-<!-- THIS IS THE AUTOMATIC PART -->
 <div class="card">
-<h2 style="text-align:center; color:red;">🔴 LIVE Food Available Now</h2>
-<p style="text-align:center; font-size:12px;">Hotel posted food will appear here automatically</p>
-<div id="liveFeed">
-<p style="text-align:center; color:#888;">No food available right now. Post food above to see here.</p>
-</div>
+<h2 style="text-align:center; color:red; margin:0;">🔴 LIVE Food Now</h2>
+<div id="liveFeed"><p style="text-align:center; color:#888;">No food now.</p></div>
 </div>
 
-<!-- PARTNER -->
 <div class="card" style="text-align:center;">
-<h3>City Partner - Rs 299</h3>
+<h3 style="margin:0;">Become City Partner</h3>
+<p style="font-size:13px;">Earn up to Rs 15,000/month</p>
+<h3 style="color:#f97316; margin:5px;">Joining Fee - Rs 299</h3>
+
 <div class="qr-box">
+<p style="font-weight:bold;">Scan & Pay Rs 299</p>
 <img id="qrImg" src="" width="180" height="180">
-<p style="font-size:12px;">UPI: 8825461353@okaxis</p>
+<p style="font-size:11px;">UPI: 8825461353@okaxis</p>
 </div>
-<button class="btn" style="background:#f97316; color:white;" onclick="payUPI()">Pay Rs 299 via GPay</button>
-<button class="btn" style="background:#000; color:white;" onclick="paidDone()">I Paid - Send Proof</button>
+
+<button class="btn btn-orange" onclick="payUPI()">1. Pay via GPay / PhonePe</button>
+
+<div id="proofSection">
+<p style="font-weight:bold; color:red; margin:0;">Step 2: Pay panna aprom mattum fill pannunga!</p>
+<label>GPay Transaction ID / UTR (12 Digit)</label>
+<input type="text" id="utr" placeholder="Ex: 418967239876">
+<p style="font-size:11px; color:#555;">GPay > History > Click payment > UTR copy pannunga. Screenshot ready ah vechukonga.</p>
+<button class="btn" style="background:#000; color:white;" onclick="paidDone()">2. Send Proof with UTR to Admin</button>
+</div>
+
+<p style="font-size:11px; margin-top:10px;">Pay pannama "I Paid" nu anupina block panniduvom!</p>
 </div>
 
 </div>
 
 <script>
-var upiLink = `upi://pay?pa=8825461353@okaxis&pn=UnavO&am=299&cu=INR&tn=City Partner`;
+var upiLink = `upi://pay?pa=8825461353@okaxis&pn=UnavO&am=299&cu=INR&tn=City Partner Fee 299`;
 document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiLink)}`;
 
-// Load old posts from browser memory
 window.onload = function(){ 
   var saved = JSON.parse(localStorage.getItem('unavo_food') || '[]');
   saved.forEach(showLive);
@@ -74,31 +84,40 @@ function postFood() {
   var type = document.getElementById('type').value;
   var address = document.getElementById('address').value;
   var phone = document.getElementById('phone').value;
-  if(!food || !qty || !expiry || !address || !phone){ alert("Fill all fields da"); return; }
-
+  if(!food || !qty || !expiry || !address || !phone){ alert("Fill all da"); return; }
   var data = {food, qty, prep, expiry, type, address, phone, time: new Date().toLocaleTimeString()};
-  
-  // 1. Save to show LIVE
   showLive(data);
   var saved = JSON.parse(localStorage.getItem('unavo_food') || '[]');
   saved.unshift(data);
   localStorage.setItem('unavo_food', JSON.stringify(saved));
-
-  // 2. Send to you on WhatsApp
-  var msg = `🍱 *NEW FOOD - UnavO*%0A%0A*Food:* ${food}%0A*Qty:* ${qty}%0A*Type:* ${type}%0A*Prepared:* ${prep}%0A*Collect Before:* ${expiry}%0A*Address:* ${address}%0A*Phone:* ${phone}`;
+  var msg = `🍱 *NEW FOOD - UnavO*%0A*Food:* ${food}%0A*Qty:* ${qty}%0A*Collect Before:* ${expiry}%0A*Addr:* ${address}%0A*Phone:* ${phone}`;
   window.open(`https://wa.me/918825461353?text=${msg}`, '_blank');
-  document.getElementById('successMsg').innerText = "Posted LIVE! Check below section. Food is now visible to all NGOs!";
+  document.getElementById('successMsg').innerText = "Posted LIVE!";
 }
 
 function showLive(d){
   var div = document.createElement('div');
   div.className = 'live-card';
-  div.innerHTML = `<b>🍱 ${d.food} - ${d.qty}</b><br><small>${d.type} | Prepared: ${d.prep} | Collect Before: <b style="color:red;">${d.expiry}</b></small><br>📍 ${d.address}<br>📞 <a href="tel:${d.phone}">${d.phone}</a> | <a href="https://wa.me/91${d.phone}" target="_blank">WhatsApp</a><br><small>Posted: ${d.time}</small><br><button onclick="this.parentElement.remove()" style="margin-top:8px; background:red; color:white; border:none; padding:5px 10px; border-radius:5px;">Collected / Remove</button>`;
+  div.innerHTML = `<b>🍱 ${d.food} - ${d.qty}</b><br><small>${d.type} | Before: <b style="color:red;">${d.expiry}</b></small><br>📍 ${d.address}<br>📞 ${d.phone}<br><small>${d.time}</small>`;
   document.getElementById('liveFeed').prepend(div);
 }
 
-function payUPI(){ window.location.href = upiLink; }
-function paidDone(){ window.open(`https://wa.me/918825461353?text=Hi I paid Rs 299 for City Partner`, '_blank'); }
+function payUPI(){
+  window.location.href = upiLink;
+  // Pay click pannina aprom than proof section varum
+  setTimeout(()=>{ document.getElementById('proofSection').style.display = 'block'; }, 1500);
+}
+
+function paidDone(){
+  var utr = document.getElementById('utr').value.trim();
+  if(utr.length < 8){
+    alert("DEI FRAUD PANATHA! 😡 UTR Number correct ah pota than anuppa mudiyum. GPay la poi check pannu!");
+    return;
+  }
+  var msg = `*UnavO City Partner - PAYMENT PROOF*%0A%0AI paid Rs 299%0A*UTR / Transaction ID:* ${utr}%0A%0A*NOTE:* Please check your GPay/PhonePe if Rs 299 received for UTR ${utr}. Screenshot also ready.%0A%0AIf amount NOT received, this is FRAUD.`;
+  window.open(`https://wa.me/918825461353?text=${msg}`, '_blank');
+  alert("Proof sent da! Admin 10 min la check panni confirm pannuvanga. GPay screenshot ah anuppa ready ah iru!");
+}
 </script>
 </body>
 </html>
