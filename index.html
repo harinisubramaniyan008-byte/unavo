@@ -1,146 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UnavO - Share Food, Save Lives</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-*{font-family:'Poppins', sans-serif;}
-body{margin:0; background:#fefce8; }
-.hero{
-  background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800');
-  background-size:cover; background-position:center;
-  color:white; padding:60px 20px; text-align:center;
-}
-.hero h1{font-size:36px; margin:0; line-height:1.2;}
-.hero p{font-size:15px; opacity:0.9; margin-top:10px;}
-.hero-badge{background:#16a34a; display:inline-block; padding:6px 14px; border-radius:20px; font-size:12px; margin-bottom:12px;}
-.container{padding:20px; max-width:500px; margin:auto; margin-top:-30px;}
-.card{background:white; padding:22px; border-radius:20px; box-shadow:0 8px 30px rgba(0,0,0,0.08); margin-bottom:20px;}
-.steps{display:flex; gap:10px; justify-content:space-between; text-align:center; margin:20px 0;}
-.step{flex:1; background:#f0fdf4; padding:12px; border-radius:12px;}
-.step img{width:50px; height:50px; border-radius:10px; object-fit:cover;}
-.step p{font-size:11px; font-weight:600; margin:5px 0 0 0;}
-label{font-weight:600; font-size:13px; margin-top:12px; display:block; color:#333;}
-input, select{width:92%; padding:13px; margin:6px 0 12px 0; border-radius:10px; border:1.5px solid #e5e7eb; background:#f9fafb; font-size:14px;}
-.btn{width:100%; padding:15px; border:none; border-radius:12px; font-size:16px; font-weight:700; cursor:pointer; margin-top:10px;}
-.btn-green{background:linear-gradient(135deg,#16a34a,#15803d); color:white;}
-.btn-orange{background:linear-gradient(135deg,#f97316,#ea580c); color:white;}
-.live-card{display:flex; gap:12px; background:white; border:1px solid #bbf7d0; padding:12px; border-radius:14px; margin-top:12px; align-items:center;}
-.live-card img{width:70px; height:70px; border-radius:12px; object-fit:cover;}
-.qr-box{text-align:center; background:linear-gradient(135deg,#fff7ed,#ffedd5); padding:18px; border-radius:16px; border:1px dashed #fb923c;}
-#proofSection{display:none; background:#fffbeb; padding:15px; border-radius:12px; border:1px dashed #f59e0b; margin-top:15px;}
-.stat-row{display:flex; gap:10px; margin-top:15px;}
-.stat{flex:1; text-align:center; background:#16a34a; color:white; padding:10px; border-radius:10px;}
-.stat b{font-size:18px; display:block;}
-</style>
-</head>
-<body>
-
-<div class="hero">
-<div class="hero-badge">♻️ 1,200+ Meals Saved</div>
-<h1>Turn Your<br>Waste Food<br>Into Hope</h1>
-<p>Hotels post surplus food. We deliver it to orphanages & old age homes in 30 mins.</p>
-<div class="stat-row">
-<div class="stat"><b>350+</b><small>Hotels</small></div>
-<div class="stat"><b>120+</b><small>NGOs</small></div>
-<div class="stat"><b>15k</b><small>Meals Saved</small></div>
-</div>
-</div>
-
-<div class="container">
-
-<div class="card">
-<h3 style="text-align:center; margin:0 0 15px 0;">How UnavO Works?</h3>
-<div class="steps">
-<div class="step"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=200"><p>1. Hotel Posts Food</p></div>
-<div class="step"><img src="https://images.unsplash.com/photo-1526367790999-015f668a3e3b?w=200"><p>2. We Collect Fast</p></div>
-<div class="step"><img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=200"><p>3. NGO Feeds People</p></div>
-</div>
-</div>
-
-<div class="card">
-<h2 style="margin:0; text-align:center;">🍱 Post Available Food</h2>
-<p style="text-align:center; font-size:12px; color:#666;">Fill details, food will go LIVE instantly</p>
-<label>🍛 Food Name</label><input type="text" id="foodName" placeholder="Ex: Veg Biryani, Curd Rice">
-<label>🔢 Quantity</label><input type="text" id="qty" placeholder="Ex: 30 Plates">
-<label>⏰ Prepared Time</label><input type="time" id="prepTime">
-<label>⌛ Must Collect Before</label><input type="time" id="expiryTime">
-<label>🥗 Food Type</label><select id="type"><option>Pure Veg 🟢</option><option>Non-Veg 🔴</option></select>
-<label>📍 Pickup Location</label><input type="text" id="address" placeholder="Hotel Name, Trichy">
-<label>📞 Your WhatsApp Number</label><input type="tel" id="phone" placeholder="98xxxxxxxx">
-<button class="btn btn-green" onclick="postFood()">🚀 Post Food - Go LIVE Now</button>
-<p id="successMsg" style="text-align:center; color:#16a34a; font-weight:700;"></p>
-</div>
-
-<div class="card">
-<h3 style="color:#dc2626; margin:0; text-align:center;">🔴 LIVE - Food Available Now</h3>
-<div id="liveFeed"><p style="text-align:center; color:#888; font-size:13px;">No food available right now.</p></div>
-</div>
-
 <div class="card" style="text-align:center;">
-<img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=300" style="width:100%; height:140px; object-fit:cover; border-radius:12px;">
-<h3 style="margin:12px 0 5px 0;">Become a City Partner 💼</h3>
-<p style="font-size:13px; color:#555; margin:0;">Earn Rs 15k/month. Manage your city.</p>
-<h2 style="color:#f97316;">Rs 299 Only</h2>
+<h3>Become City Partner - Rs 299</h3>
 
-<div class="qr-box">
-<p style="font-weight:700; margin:0 0 10px 0;">Scan & Pay Securely</p>
-<img id="qrImg" src="" width="170" height="170" style="background:white; padding:8px; border-radius:10px;">
-<p style="font-size:11px; margin-top:8px;">UPI ID: <b>harinisubramaniyan008@oksbi</b></p>
-<p style="font-size:11px; color:#666;">Direct to Harini GPay</p>
+<!-- STEP 1: DIRECT NUMBER PAY - 100% WORKS -->
+<div style="background:#dcfce7; padding:15px; border-radius:12px; text-align:left; border:2px solid #16a34a;">
+<p style="margin:0; font-weight:bold; color:#15803d;">✅ 100% Working Method - Use This:</p>
+<p style="font-size:13px; margin:8px 0;">1. Open <b>GPay</b><br>2. Click <b>Pay Phone Number</b><br>3. Type this number: <b style="font-size:18px; background:yellow; padding:2px 6px;">8825461353</b> or Harini Number<br>4. Pay <b>Rs 299</b></p>
+<p style="font-size:11px; color:#555;">Number ku direct ah pay panna "Bank name load" error varathu!</p>
 </div>
 
-<button class="btn btn-orange" onclick="payUPI()">Step 1: Pay Rs 299 with GPay</button>
-<div id="proofSection" style="text-align:left;">
-<label>Enter 12-digit UTR / Transaction ID</label>
-<input type="text" id="utr" placeholder="Check GPay History > Transaction">
-<button class="btn" style="background:#111; color:white;" onclick="paidDone()">Step 2: Verify & Send Proof</button>
-<p id="payHelp" style="font-size:11px; color:#b45309; text-align:center;"></p>
-</div>
+<div class="qr-box" style="margin-top:15px;">
+<p style="font-weight:bold;">Or Scan this QR in GPay</p>
+<!-- Use Harini's ORIGINAL GPay QR screenshot here for 100% success -->
+<img id="qrImg" src="" width="180" height="180">
+<p style="font-size:11px;">UPI: harinisubramaniyan008@oksbi</p>
+<p style="font-size:10px; color:red;">If QR shows "Could not load bank", use Phone Number method above!</p>
 </div>
 
+<!-- REMOVE AUTO BUTTON, KEEP ONLY PROOF -->
+<button class="btn" style="background:#16a34a; color:white; margin-top:15px;" onclick="document.getElementById('proofSection').style.display='block'">I Have Paid Rs 299 - Click Here</button>
+
+<div id="proofSection" style="display:none; background:#fffbeb; padding:15px; border-radius:12px; border:1px dashed #f59e0b; margin-top:15px; text-align:left;">
+<label>Enter UTR Number</label>
+<input type="text" id="utr" placeholder="GPay history la irukkum 12 digit">
+<button class="btn" style="background:#111; color:white;" onclick="paidDone()">Send Proof to Admin</button>
+</div>
 </div>
 
 <script>
 const upiId = "harinisubramaniyan008@oksbi";
-const upiLink = `upi://pay?pa=${upiId}&pn=Harini&am=299&cu=INR`;
-document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=${encodeURIComponent(upiLink)}`;
+// DO NOT use upi://pay link - it causes bank name error for SBI
+// Show QR only as backup
+document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=${upiId}&pn=Harini&am=299&cu=INR`;
 
-function getFoodImage(name){
-  name = name.toLowerCase();
-  if(name.includes('biryani')) return 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200';
-  if(name.includes('rice')) return 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=200';
-  return 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=200';
-}
-function postFood(){
-  const food=document.getElementById('foodName').value, qty=document.getElementById('qty').value, expiry=document.getElementById('expiryTime').value, type=document.getElementById('type').value, address=document.getElementById('address').value, phone=document.getElementById('phone').value;
-  if(!food||!qty||!expiry||!address||!phone){alert("Please fill all fields"); return;}
-  const data={food, qty, expiry, type, address, phone, time:new Date().toLocaleTimeString(), img:getFoodImage(food)};
-  showLive(data);
-  let saved=JSON.parse(localStorage.getItem('unavo_food')||'[]'); saved.unshift(data); localStorage.setItem('unavo_food', JSON.stringify(saved));
-  window.open(`https://wa.me/918825461353?text=🍱 NEW FOOD - ${food} - ${qty} - ${address}`, '_blank');
-  document.getElementById('successMsg').innerText="✅ LIVE!";
-}
-function showLive(d){
-  const div=document.createElement('div'); div.className='live-card';
-  div.innerHTML=`<img src="${d.img}"><div style="text-align:left; flex:1;"><b>🍱 ${d.food}</b> - ${d.qty}<br><small>${d.type} | Before <b style="color:red;">${d.expiry}</b></small><br><small>📍 ${d.address}</small><br><small>📞 ${d.phone}</small></div>`;
-  document.getElementById('liveFeed').prepend(div);
-}
-function payUPI(){ 
-  window.location.href=upiLink; 
-  setTimeout(()=>{ 
-    document.getElementById('proofSection').style.display='block'; 
-    document.getElementById('payHelp').innerText="Payment done to Harini GPay (harinisubramaniyan008@oksbi). Enter UTR below.";
-  }, 1200); 
-}
 function paidDone(){
-  const utr=document.getElementById('utr').value.trim();
-  if(utr.length<8){alert("Invalid UTR!"); return;}
-  window.open(`https://wa.me/918825461353?text=City Partner Paid Rs 299 to Harini GPay - UTR: ${utr}`, '_blank');
+  const utr = document.getElementById('utr').value.trim();
+  if(utr.length < 8){ alert("UTR poda ma!"); return; }
+  window.open(`https://wa.me/918825461353?text=Paid Rs 299 to Harini - UTR: ${utr}`, '_blank');
 }
-window.onload=()=>{ JSON.parse(localStorage.getItem('unavo_food')||'[]').forEach(showLive); }
 </script>
-</body>
-</html>
