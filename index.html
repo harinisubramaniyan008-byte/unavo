@@ -3,146 +3,126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UnavO - Share Food, Save Lives</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<title>UnavO - Fraud Proof</title>
 <style>
-*{font-family:'Poppins', sans-serif;}
-body{margin:0; background:#fefce8; }
-.hero{
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800');
-  background-size:cover; background-position:center;
-  color:white; padding:60px 20px; text-align:center;
-}
-.hero h1{font-size:36px; margin:0; line-height:1.2;}
-.hero p{font-size:16px; opacity:0.9; margin-top:10px;}
-.hero-badge{background:#16a34a; display:inline-block; padding:6px 14px; border-radius:20px; font-size:12px; margin-bottom:12px;}
-.container{padding:20px; max-width:500px; margin:auto; margin-top:-30px;}
-.card{background:white; padding:22px; border-radius:20px; box-shadow:0 8px 30px rgba(0,0,0,0.08); margin-bottom:20px;}
-.steps{display:flex; gap:10px; justify-content:space-between; text-align:center; margin:20px 0;}
-.step{flex:1; background:#f0fdf4; padding:12px; border-radius:12px;}
-.step img{width:50px; height:50px; border-radius:10px; object-fit:cover;}
-.step p{font-size:11px; font-weight:600; margin:5px 0 0 0;}
-label{font-weight:600; font-size:13px; margin-top:12px; display:block; color:#333;}
-input, select{width:92%; padding:13px; margin:6px 0 12px 0; border-radius:10px; border:1.5px solid #e5e7eb; background:#f9fafb; font-size:14px;}
-.btn{width:100%; padding:15px; border:none; border-radius:12px; font-size:16px; font-weight:700; cursor:pointer; margin-top:10px; transition:0.3s;}
-.btn-green{background:linear-gradient(135deg,#16a34a,#15803d); color:white; box-shadow:0 4px 15px rgba(22,163,74,0.3);}
-.btn-orange{background:linear-gradient(135deg,#f97316,#ea580c); color:white;}
-.live-card{display:flex; gap:12px; background:white; border:1px solid #bbf7d0; padding:12px; border-radius:14px; margin-top:12px; align-items:center;}
-.live-card img{width:70px; height:70px; border-radius:12px; object-fit:cover;}
-.qr-box{text-align:center; background:linear-gradient(135deg,#fff7ed,#ffedd5); padding:18px; border-radius:16px; border:1px dashed #fb923c;}
-#proofSection{display:none; background:#fffbeb; padding:15px; border-radius:12px; border:1px dashed #f59e0b; margin-top:15px;}
-.stat-row{display:flex; gap:10px; margin-top:15px;}
-.stat{flex:1; text-align:center; background:#16a34a; color:white; padding:10px; border-radius:10px;}
-.stat b{font-size:18px; display:block;}
+body{font-family:sans-serif; margin:0; background:#fff8f0; text-align:center;}
+.header{background:#16a34a; color:white; padding:20px; font-size:22px; font-weight:bold;}
+.container{padding:15px; max-width:500px; margin:auto;}
+.card{background:white; padding:20px; border-radius:15px; box-shadow:0 2px 10px rgba(0,0,0,0.1); text-align:left; margin-bottom:20px;}
+label{font-weight:bold; font-size:14px; margin-top:10px; display:block;}
+input, select{width:92%; padding:12px; margin:6px 0 12px 0; border-radius:8px; border:1px solid #ccc;}
+.btn{width:100%; padding:16px; border:none; border-radius:12px; font-size:16px; font-weight:bold; cursor:pointer; margin-top:10px;}
+.btn-green{background:#16a34a; color:white;}
+.btn-orange{background:#f97316; color:white;}
+.live-card{background:#e6ffed; border:2px solid #16a34a; padding:12px; border-radius:12px; margin-top:10px; text-align:left;}
+.qr-box{text-align:center; background:#f9fafb; padding:15px; border-radius:12px; margin:15px 0;}
+#proofSection{display:none; background:#fff3cd; padding:15px; border-radius:12px; border:1px dashed #f97316; margin-top:15px;}
 </style>
 </head>
 <body>
-
-<div class="hero">
-<div class="hero-badge">♻️ 1,200+ Meals Saved</div>
-<h1>Turn Your<br>Waste Food<br>Into Hope</h1>
-<p>Hotels post surplus food. We deliver it to orphanages & old age homes in 30 mins.</p>
-<div class="stat-row">
-<div class="stat"><b>350+</b><small>Hotels</small></div>
-<div class="stat"><b>120+</b><small>NGOs</small></div>
-<div class="stat"><b>15k</b><small>Meals Saved</small></div>
-</div>
-</div>
-
+<div class="header">UnavO ♻️ - Live Food Share</div>
 <div class="container">
 
-<!-- HOW IT WORKS - CREATIVE ADDITION -->
 <div class="card">
-<h3 style="text-align:center; margin:0 0 15px 0;">How UnavO Works?</h3>
-<div class="steps">
-<div class="step"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=200"><p>1. Hotel Posts Food</p></div>
-<div class="step"><img src="https://images.unsplash.com/photo-1526367790999-015f668a3e3b?w=200"><p>2. We Collect Fast</p></div>
-<div class="step"><img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=200"><p>3. NGO Feeds People</p></div>
-</div>
+<h2 style="text-align:center; margin:0;">Hotel - Post Food</h2>
+<label>Food Name</label><input type="text" id="foodName" placeholder="Ex: Veg Biryani">
+<label>Quantity</label><input type="text" id="qty" placeholder="Ex: 30 plates">
+<label>Prepared Time</label><input type="time" id="prepTime">
+<label>Collect Before</label><input type="time" id="expiryTime">
+<label>Veg / Non-Veg</label><select id="type"><option>Pure Veg</option><option>Non-Veg</option></select>
+<label>Pickup Address</label><input type="text" id="address" placeholder="Hotel Name, Trichy">
+<label>Your Phone</label><input type="tel" id="phone" placeholder="Your Number">
+<button class="btn btn-green" onclick="postFood()">Post Food - Share LIVE</button>
+<p id="successMsg" style="text-align:center; color:green; font-weight:bold;"></p>
 </div>
 
-<!-- FORM -->
 <div class="card">
-<h2 style="margin:0; text-align:center;">🍱 Post Available Food</h2>
-<p style="text-align:center; font-size:12px; color:#666;">Fill details, food will go LIVE instantly</p>
-
-<label>🍛 Food Name</label><input type="text" id="foodName" placeholder="Ex: Veg Biryani, Curd Rice">
-<label>🔢 Quantity</label><input type="text" id="qty" placeholder="Ex: 30 Plates">
-<label>⏰ Prepared Time</label><input type="time" id="prepTime">
-<label>⌛ Must Collect Before</label><input type="time" id="expiryTime">
-<label>🥗 Food Type</label><select id="type"><option>Pure Veg 🟢</option><option>Non-Veg 🔴</option></select>
-<label>📍 Pickup Location</label><input type="text" id="address" placeholder="Hotel Name, Trichy">
-<label>📞 Your WhatsApp Number</label><input type="tel" id="phone" placeholder="98xxxxxxxx">
-
-<button class="btn btn-green" onclick="postFood()">🚀 Post Food - Go LIVE Now</button>
-<p id="successMsg" style="text-align:center; color:#16a34a; font-weight:700;"></p>
+<h2 style="text-align:center; color:red; margin:0;">🔴 LIVE Food Now</h2>
+<div id="liveFeed"><p style="text-align:center; color:#888;">No food now.</p></div>
 </div>
 
-<!-- LIVE FEED WITH IMAGES -->
-<div class="card">
-<h3 style="color:#dc2626; margin:0; text-align:center;">🔴 LIVE - Food Available Now</h3>
-<div id="liveFeed"><p style="text-align:center; color:#888; font-size:13px;">No food available right now. Be the first to post!</p></div>
-</div>
-
-<!-- PARTNER - MODERN -->
 <div class="card" style="text-align:center;">
-<img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=300" style="width:100%; height:140px; object-fit:cover; border-radius:12px;">
-<h3 style="margin:12px 0 5px 0;">Become a City Partner 💼</h3>
-<p style="font-size:13px; color:#555; margin:0;">Earn Rs 15k/month. Manage your city. We give you hotels & NGOs.</p>
-<h2 style="color:#f97316;">Rs 299 Only</h2>
+<h3 style="margin:0;">Become City Partner</h3>
+<p style="font-size:13px;">Earn up to Rs 15,000/month</p>
+<h3 style="color:#f97316; margin:5px;">Joining Fee - Rs 299</h3>
 
 <div class="qr-box">
-<p style="font-weight:700; margin:0 0 10px 0;">Scan & Pay Securely</p>
-<img id="qrImg" src="" width="170" height="170" style="background:white; padding:8px; border-radius:10px;">
-<p style="font-size:11px; margin-top:8px;">UPI ID: 8825461353@okaxis</p>
+<p style="font-weight:bold;">Scan & Pay Rs 299</p>
+<img id="qrImg" src="" width="180" height="180">
+<p style="font-size:11px;">UPI: 8825461353@okaxis</p>
+<p style="font-size:11px; color:#666; margin-top:8px;">If button not working, open GPay and pay to: <b>8825461353</b></p>
 </div>
 
-<button class="btn btn-orange" onclick="payUPI()">Step 1: Pay Rs 299 with GPay</button>
-<div id="proofSection" style="text-align:left;">
-<label>Enter 12-digit UTR / Transaction ID</label>
-<input type="text" id="utr" placeholder="Check GPay History > Transaction">
-<button class="btn" style="background:#111; color:white;" onclick="paidDone()">Step 2: Verify & Send Proof</button>
-<p style="font-size:10px; color:red; text-align:center;">Fraud protection: UTR is mandatory. Fake proofs will be blocked.</p>
+<button class="btn btn-orange" onclick="payUPI()">1. Pay via GPay / PhonePe</button>
+
+<div id="proofSection">
+<p style="font-weight:bold; color:red; margin:0;">Step 2: Pay panna aprom mattum fill pannunga!</p>
+<label>GPay Transaction ID / UTR (12 Digit)</label>
+<input type="text" id="utr" placeholder="Ex: 418967239876">
+<p style="font-size:11px; color:#555;">GPay > History > Click payment > UTR copy pannunga. Screenshot ready ah vechukonga.</p>
+<button class="btn" style="background:#000; color:white;" onclick="paidDone()">2. Send Proof with UTR to Admin</button>
 </div>
+
+<p id="payHelp" style="font-size:11px; margin-top:10px; color:#666;"></p>
 </div>
 
 </div>
 
 <script>
-const upiLink = `upi://pay?pa=8825461353@okaxis&pn=UnavO&am=299&cu=INR&tn=City Partner`;
-document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=${encodeURIComponent(upiLink)}`;
+var upiId = "8825461353@okaxis";
+// FIXED LINK - Removed special chars that cause "No Bank" error
+var upiLink = `upi://pay?pa=${upiId}&pn=UnavO&am=299&cu=INR`;
+document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiLink)}`;
 
-function getFoodImage(name){
-  name = name.toLowerCase();
-  if(name.includes('biryani')) return 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200';
-  if(name.includes('rice') || name.includes('sambar')) return 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=200';
-  if(name.includes('curd')) return 'https://images.unsplash.com/photo-1482049016688-2d3e1b31122f?w=200';
-  return 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=200';
+window.onload = function(){ 
+  var saved = JSON.parse(localStorage.getItem('unavo_food') || '[]');
+  saved.forEach(showLive);
 }
 
-function postFood(){
-  const food=document.getElementById('foodName').value, qty=document.getElementById('qty').value, prep=document.getElementById('prepTime').value, expiry=document.getElementById('expiryTime').value, type=document.getElementById('type').value, address=document.getElementById('address').value, phone=document.getElementById('phone').value;
-  if(!food||!qty||!expiry||!address||!phone){alert("Please fill all fields"); return;}
-  const data={food, qty, prep, expiry, type, address, phone, time:new Date().toLocaleTimeString(), img:getFoodImage(food)};
+function postFood() {
+  var food = document.getElementById('foodName').value;
+  var qty = document.getElementById('qty').value;
+  var prep = document.getElementById('prepTime').value;
+  var expiry = document.getElementById('expiryTime').value;
+  var type = document.getElementById('type').value;
+  var address = document.getElementById('address').value;
+  var phone = document.getElementById('phone').value;
+  if(!food || !qty || !expiry || !address || !phone){ alert("Fill all da"); return; }
+  var data = {food, qty, prep, expiry, type, address, phone, time: new Date().toLocaleTimeString()};
   showLive(data);
-  let saved=JSON.parse(localStorage.getItem('unavo_food')||'[]'); saved.unshift(data); localStorage.setItem('unavo_food', JSON.stringify(saved));
-  const msg=`🍱 NEW FOOD - UnavO%0AFood: ${food}%0AQty: ${qty}%0ABefore: ${expiry}%0AAddr: ${address}%0APhone: ${phone}`;
+  var saved = JSON.parse(localStorage.getItem('unavo_food') || '[]');
+  saved.unshift(data);
+  localStorage.setItem('unavo_food', JSON.stringify(saved));
+  var msg = `🍱 *NEW FOOD - UnavO*%0A*Food:* ${food}%0A*Qty:* ${qty}%0A*Collect Before:* ${expiry}%0A*Addr:* ${address}%0A*Phone:* ${phone}`;
   window.open(`https://wa.me/918825461353?text=${msg}`, '_blank');
-  document.getElementById('successMsg').innerText="✅ LIVE! Your food is now visible to all NGOs!";
+  document.getElementById('successMsg').innerText = "Posted LIVE!";
 }
+
 function showLive(d){
-  const div=document.createElement('div'); div.className='live-card';
-  div.innerHTML=`<img src="${d.img}"><div style="text-align:left; flex:1;"><b>🍱 ${d.food}</b> - ${d.qty}<br><small>${d.type} | Before <b style="color:red;">${d.expiry}</b></small><br><small>📍 ${d.address}</small><br><small>📞 ${d.phone}</small></div>`;
+  var div = document.createElement('div');
+  div.className = 'live-card';
+  div.innerHTML = `<b>🍱 ${d.food} - ${d.qty}</b><br><small>${d.type} | Before: <b style="color:red;">${d.expiry}</b></small><br>📍 ${d.address}<br>📞 ${d.phone}<br><small>${d.time}</small>`;
   document.getElementById('liveFeed').prepend(div);
 }
-function payUPI(){ window.location.href=upiLink; setTimeout(()=>{document.getElementById('proofSection').style.display='block';},1000); }
-function paidDone(){
-  const utr=document.getElementById('utr').value.trim();
-  if(utr.length<8){alert("Invalid UTR! Enter correct 12-digit Transaction ID. No fraud!"); return;}
-  const msg=`*City Partner Payment Proof*%0AUTR: ${utr}%0AVerify Rs 299 received.`;
-  window.open(`https://wa.me/918825461353?text=${msg}`, '_blank');
+
+function payUPI(){
+  window.location.href = upiLink;
+  setTimeout(()=>{ 
+    document.getElementById('proofSection').style.display = 'block'; 
+    document.getElementById('payHelp').innerText = "If GPay shows 'No bank / Dismiss' -> Close it and Open GPay manually and pay to 8825461353. Then enter UTR below.";
+  }, 1500);
 }
-window.onload=()=>{ JSON.parse(localStorage.getItem('unavo_food')||'[]').forEach(showLive); }
+
+function paidDone(){
+  var utr = document.getElementById('utr').value.trim();
+  if(utr.length < 8){
+    alert("DEI FRAUD PANATHA! UTR Number correct ah pota than anuppa mudiyum. GPay la poi check pannu!");
+    return;
+  }
+  var msg = `*UnavO City Partner - PAYMENT PROOF*%0A%0AI paid Rs 299%0A*UTR / Transaction ID:* ${utr}%0A%0A*NOTE:* Please check your GPay/PhonePe if Rs 299 received for UTR ${utr}. Screenshot also ready.%0A%0AIf amount NOT received, this is FRAUD.`;
+  window.open(`https://wa.me/918825461353?text=${msg}`, '_blank');
+  alert("Proof sent da! Admin 10 min la check panni confirm pannuvanga. GPay screenshot ah anuppa ready ah iru!");
+}
 </script>
 </body>
 </html>
