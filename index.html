@@ -3,60 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UnavO - Food Share</title>
+<title>UnavO - Share Food</title>
 <style>
 body{font-family:sans-serif; margin:0; background:#fff8f0; text-align:center;}
 .header{background:#16a34a; color:white; padding:20px; font-size:24px; font-weight:bold;}
-.container{padding:20px; max-width:500px; margin:auto;}
-.card{background:white; padding:20px; border-radius:15px; box-shadow:0 2px 10px rgba(0,0,0,0.1); text-align:left;}
+.container{padding:15px; max-width:500px; margin:auto;}
+.card{background:white; padding:20px; border-radius:15px; box-shadow:0 2px 10px rgba(0,0,0,0.1); text-align:left; margin-bottom:20px;}
 label{font-weight:bold; font-size:14px; margin-top:10px; display:block;}
 input, select{width:92%; padding:12px; margin:6px 0 12px 0; border-radius:8px; border:1px solid #ccc;}
 .btn{width:100%; padding:16px; border:none; border-radius:12px; font-size:18px; font-weight:bold; cursor:pointer; margin-top:10px;}
 .btn-green{background:#16a34a; color:white;}
 .btn-blue{background:#2563eb; color:white; display:none;}
+.btn-orange{background:#f97316; color:white;}
+.qr-box{text-align:center; background:#f9fafb; padding:15px; border-radius:12px; margin:15px 0;}
 </style>
 </head>
 <body>
-<div class="header">UnavO ♻️ - Share Food</div>
+<div class="header">UnavO ♻️ - Turn Waste to Worth</div>
 <div class="container">
+
+<!-- FOOD FORM -->
 <div class="card">
-<h2 style="text-align:center;">Hotel / Restaurant Form</h2>
+<h2 style="text-align:center; margin:0;">Hotel / Restaurant Form</h2>
+<p style="text-align:center; font-size:13px;">Fill details to share food</p>
 
 <label>Food Name</label>
 <input type="text" id="foodName" placeholder="Ex: Veg Biryani, Sambar Rice">
-
-<label>Quantity - How many people can eat?</label>
+<label>Quantity</label>
 <input type="text" id="qty" placeholder="Ex: 30 plates / 10 Kg">
-
 <label>Prepared Time</label>
 <input type="time" id="prepTime">
-
-<label>Collect Before - Food will be fresh until?</label>
+<label>Collect Before</label>
 <input type="time" id="expiryTime">
-
 <label>Veg / Non-Veg</label>
-<select id="type">
-<option value="Pure Veg">Pure Veg</option>
-<option value="Non-Veg">Non-Veg</option>
-<option value="Veg & Non-Veg">Both</option>
-</select>
-
-<label>Pickup Address / Hotel Name</label>
+<select id="type"><option>Pure Veg</option><option>Non-Veg</option><option>Both</option></select>
+<label>Pickup Address</label>
 <input type="text" id="address" placeholder="Ex: Annapoorna Hotel, Trichy">
-
 <label>Your Phone Number</label>
 <input type="tel" id="phone" placeholder="Your Number">
 
 <button class="btn btn-green" onclick="postFood()">1. Send to UnavO Admin</button>
-
-<!-- This button appears AFTER posting -->
 <button class="btn btn-blue" id="shareBtn" onclick="shareToAll()">2. Share to All NGOs & Groups</button>
 <p id="successMsg" style="text-align:center; color:green; font-weight:bold;"></p>
 </div>
+
+<!-- PARTNER PAYMENT -->
+<div class="card" style="text-align:center;">
+<h2 style="margin:0;">Become City Partner</h2>
+<p style="font-size:14px;">Earn up to Rs 15,000/month. We will give you 5 hotels.</p>
+<h3 style="color:#f97316;">Joining Fee - Rs 299 Only</h3>
+
+<div class="qr-box">
+<p style="font-weight:bold;">Scan & Pay Rs 299</p>
+<img id="qrImg" src="" width="200" height="200" style="border:1px solid #ddd;">
+<p style="font-size:12px; margin-top:5px;">UPI ID: 8825461353@okaxis</p>
+</div>
+
+<button class="btn btn-orange" onclick="payUPI()">Pay via GPay / PhonePe</button>
+<button class="btn" style="background:#000; color:white;" onclick="paidDone()">I Have Paid - Send Proof</button>
+<p style="font-size:11px; margin-top:10px;">After payment, click "I Have Paid" to send screenshot to Admin on WhatsApp.</p>
+</div>
+
 </div>
 
 <script>
 var finalMessage = "";
+var upiID = "8825461353@okaxis";
+var amount = "299";
+var upiLink = `upi://pay?pa=${upiID}&pn=UnavO&am=${amount}&cu=INR&tn=City Partner Fee`;
+
+// Generate QR Code
+document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiLink)}`;
 
 function postFood() {
   var food = document.getElementById('foodName').value;
@@ -66,28 +83,18 @@ function postFood() {
   var type = document.getElementById('type').value;
   var address = document.getElementById('address').value;
   var phone = document.getElementById('phone').value;
-
-  if(!food || !qty || !expiry || !address || !phone){
-    alert("Please fill all fields da");
-    return;
-  }
-
-  finalMessage = `🍱 *NEW FOOD AVAILABLE - UnavO*%0A%0A*Food:* ${food}%0A*Quantity:* ${qty}%0A*Type:* ${type}%0A*Prepared At:* ${prep}%0A*⏰ COLLECT BEFORE:* ${expiry} (After this food may spoil)%0A*📍 Pickup:* ${address}%0A*📞 Contact:* ${phone}%0A%0A_If you need this food, please call and collect before expiry time._%0A%0AWebsite: unavo-seven.vercel.app`;
-
-  // 1. Send to YOU (Admin)
+  if(!food || !qty || !expiry || !address || !phone){ alert("Please fill all fields da"); return; }
+  finalMessage = `🍱 *NEW FOOD AVAILABLE - UnavO*%0A%0A*Food:* ${food}%0A*Quantity:* ${qty}%0A*Type:* ${type}%0A*Prepared At:* ${prep}%0A*⏰ COLLECT BEFORE:* ${expiry}%0A*📍 Pickup:* ${address}%0A*📞 Contact:* ${phone}%0A%0AWebsite: unavo-seven.vercel.app`;
   var adminNumber = "918825461353";
-  var adminUrl = `https://wa.me/${adminNumber}?text=${finalMessage}`;
-  window.open(adminUrl, '_blank');
-
-  // 2. Show Share button for hotel owner
+  window.open(`https://wa.me/${adminNumber}?text=${finalMessage}`, '_blank');
   document.getElementById('shareBtn').style.display = "block";
-  document.getElementById('successMsg').innerText = "Sent to Admin! Now click below button to share to all NGO groups.";
+  document.getElementById('successMsg').innerText = "Sent to Admin! Now click below to share.";
 }
-
-function shareToAll(){
-  // This will open WhatsApp share screen - hotel owner can select multiple groups
-  var shareUrl = `https://wa.me/?text=${finalMessage}`;
-  window.open(shareUrl, '_blank');
+function shareToAll(){ window.open(`https://wa.me/?text=${finalMessage}`, '_blank'); }
+function payUPI(){ window.location.href = upiLink; }
+function paidDone(){
+  var msg = `*UnavO City Partner Payment*%0A%0AHi, I have paid Rs 299 for City Partner.%0A%0APlease check and add me.%0AMy UPI: ${upiID}%0AWebsite: unavo-seven.vercel.app`;
+  window.open(`https://wa.me/918825461353?text=${msg}`, '_blank');
 }
 </script>
 </body>
