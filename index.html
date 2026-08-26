@@ -17,25 +17,17 @@ hr{margin:30px 0;}
 </style>
 </head>
 <body>
-
 <div class="header">UnavO ♻️</div>
-
 <div class="container">
 <div class="card">
 <h2>Donate Leftover Food - FREE</h2>
-<input type="text" id="foodName" placeholder="Food Name (ex: 50 plate biryani)" value="bread">
-<input type="text" id="city" placeholder="City (ex: Trichy)" value="trichy">
-<input type="tel" id="phone" placeholder="Your Phone Number" value="8825461353">
-
-<!-- POST FOOD BUTTON -->
+<input type="text" id="foodName" placeholder="Food Name (ex: 50 plate biryani)">
+<input type="text" id="city" placeholder="City (ex: Trichy)">
+<input type="tel" id="phone" placeholder="Your Phone Number">
 <button class="btn btn-green" onclick="postFood()">Post Food Now - FREE</button>
-
 <hr>
-
 <h3>Become City Partner - Rs 299</h3>
 <p>Earn by connecting hotels & NGOs</p>
-
-<!-- JOIN NOW BUTTON -->
 <button class="btn-orange" onclick="joinNow()">Join Now - Rs 299</button>
 <p style="font-size:12px; margin-top:10px;">On Phone: Opens GPay/PhonePe<br>On Laptop: Opens WhatsApp</p>
 </div>
@@ -46,31 +38,24 @@ function postFood() {
   var food = document.getElementById('foodName').value;
   var city = document.getElementById('city').value;
   var phone = document.getElementById('phone').value;
-
-  if(!food || !city) {
-    alert("Please fill food and city");
+  if(!food || !city || !phone) {
+    alert("Please fill all fields");
     return;
   }
-
   var myWhatsAppNumber = "918825461353";
-  // FIXED LINK HERE: unavo-seven.vercel.app
   var message = `*NEW FOOD DONATION - UnavO*%0A%0AFood: ${food}%0ACity: ${city}%0APhone: ${phone}%0AWebsite: unavo-seven.vercel.app`;
-  
   var whatsappUrl = `https://wa.me/${myWhatsAppNumber}?text=${message}`;
   window.open(whatsappUrl, '_blank');
 }
 
 function joinNow(){
-  var upiLink = "upi://pay?pa=8825461353@okaxis&pn=UnavO&am=299&cu=INR&tn=City Partner Fee unavo-seven";
+  var upiLink = "upi://pay?pa=8825461353@okaxis&pn=UnavO&am=299&cu=INR&tn=City Partner Fee";
   window.location.href = upiLink;
-
-  // Fallback for Laptop users
   setTimeout(function(){
     var msg = "*UnavO City Partner*%0A%0AHi, I want to join as City Partner. Please send GPay details for Rs 299.%0AWebsite: unavo-seven.vercel.app";
     window.open("https://wa.me/918825461353?text="+msg, "_blank");
   }, 1500);
 }
 </script>
-
 </body>
 </html>
