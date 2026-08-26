@@ -1,35 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>UnavO - Stop Food Waste</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
-    .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
-    input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ccc; }
-    .btn-green { width: 100%; background: #16a34a; color: white; padding: 14px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
-    .btn-orange { display: block; text-align: center; background: #f97316; color: white; padding: 14px; border-radius: 10px; font-weight: bold; text-decoration: none; margin-top: 20px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UnavO - Turn Waste Food to Worth</title>
+<style>
+body{font-family: sans-serif; margin:0; background:#fff8f0; text-align:center;}
+.header{background:#16a34a; color:white; padding:20px; font-size:24px; font-weight:bold;}
+.container{padding:20px; max-width:500px; margin:auto;}
+.card{background:white; padding:20px; border-radius:15px; box-shadow:0 2px 10px rgba(0,0,0,0.1);}
+input{width:90%; padding:14px; margin:10px 0; border-radius:10px; border:1px solid #ccc; font-size:16px;}
+.btn{width:95%; padding:16px; border:none; border-radius:12px; font-size:18px; font-weight:bold; cursor:pointer; margin-top:10px;}
+.btn-green{background:#16a34a; color:white;}
+.btn-orange{background:#f97316; color:white; width:95%; padding:16px; border:none; border-radius:12px; font-size:18px; font-weight:bold; cursor:pointer;}
+hr{margin:30px 0;}
+</style>
 </head>
 <body>
-  <div class="card">
-    <h2>Donate Leftover Food - FREE</h2>
-    <input type="text" id="foodName" placeholder="Food Name (ex: 50 plate biryani)" value="bread">
-    <input type="text" id="city" placeholder="City (ex: Trichy)" value="trichy">
-    <input type="tel" id="phone" placeholder="Your Phone Number" value="8825461353">
-    
-    <!-- POST FOOD BUTTON -->
-    <button class="btn-green" onclick="postFood()">Post Food Now - FREE</button>
 
-    <hr style="margin: 30px 0;">
+<div class="header">UnavO ♻️</div>
 
-    <h3>Become City Partner - Rs 299</h3>
-    <p>Earn by connecting hotels & NGOs</p>
-    
-    <!-- JOIN NOW BUTTON - PAYMENT -->
-    <a class="btn-orange" href="upi://pay?pa=8825461353@okaxis&pn=UnavO&am=299&cu=INR&tn=City%20Partner%20Fee">Join Now - Rs 299</a>
-    <p style="font-size:12px; text-align:center; margin-top:10px;">Clicking will open GPay / PhonePe</p>
-  </div>
+<div class="container">
+<div class="card">
+<h2>Donate Leftover Food - FREE</h2>
+<input type="text" id="foodName" placeholder="Food Name (ex: 50 plate biryani)" value="bread">
+<input type="text" id="city" placeholder="City (ex: Trichy)" value="trichy">
+<input type="tel" id="phone" placeholder="Your Phone Number" value="8825461353">
+
+<!-- POST FOOD BUTTON -->
+<button class="btn btn-green" onclick="postFood()">Post Food Now - FREE</button>
+
+<hr>
+
+<h3>Become City Partner - Rs 299</h3>
+<p>Earn by connecting hotels & NGOs</p>
+
+<!-- JOIN NOW BUTTON -->
+<button class="btn-orange" onclick="joinNow()">Join Now - Rs 299</button>
+<p style="font-size:12px; margin-top:10px;">On Phone: Opens GPay/PhonePe<br>On Laptop: Opens WhatsApp</p>
+</div>
+</div>
 
 <script>
 function postFood() {
@@ -37,17 +47,30 @@ function postFood() {
   var city = document.getElementById('city').value;
   var phone = document.getElementById('phone').value;
 
-  if(!food || !city || !phone) {
-    alert("Please fill all fields");
+  if(!food || !city) {
+    alert("Please fill food and city");
     return;
   }
 
   var myWhatsAppNumber = "918825461353";
-  var message = `*NEW FOOD DONATION - UnavO*%0A%0AFood: ${food}%0ACity: ${city}%0APhone: ${phone}%0AWebsite: unavo-gamma.vercel.app`;
-
+  // FIXED LINK HERE: unavo-seven.vercel.app
+  var message = `*NEW FOOD DONATION - UnavO*%0A%0AFood: ${food}%0ACity: ${city}%0APhone: ${phone}%0AWebsite: unavo-seven.vercel.app`;
+  
   var whatsappUrl = `https://wa.me/${myWhatsAppNumber}?text=${message}`;
   window.open(whatsappUrl, '_blank');
 }
+
+function joinNow(){
+  var upiLink = "upi://pay?pa=8825461353@okaxis&pn=UnavO&am=299&cu=INR&tn=City Partner Fee unavo-seven";
+  window.location.href = upiLink;
+
+  // Fallback for Laptop users
+  setTimeout(function(){
+    var msg = "*UnavO City Partner*%0A%0AHi, I want to join as City Partner. Please send GPay details for Rs 299.%0AWebsite: unavo-seven.vercel.app";
+    window.open("https://wa.me/918825461353?text="+msg, "_blank");
+  }, 1500);
+}
 </script>
+
 </body>
 </html>
