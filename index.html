@@ -4,99 +4,111 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UnavO - Premium</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{font-family:'Poppins', sans-serif; box-sizing:border-box;}
-body{margin:0; background:#fefce8; }
+body{margin:0; background:#fefce8;}
+
+/* HERO WITH FOOD LOGO INSTEAD OF UGLY TEXT */
 .hero{
-  background: radial-gradient(circle at top left, #16a34a 0%, #000 55%);
-  color:white; padding:80px 20px 70px 20px; text-align:center; overflow:hidden; position:relative;
+  background: radial-gradient(circle at 30% 20%, #16a34a 0%, #052e16 50%, #000 100%);
+  color:white; padding:40px 20px 65px 20px; text-align:center; position:relative; overflow:hidden;
 }
-.hero::before{content:''; position:absolute; width:300px; height:300px; background:#22c55e; filter:blur(90px); opacity:0.4; top:-80px; left:-80px; animation:moveBlur 6s infinite alternate;}
-@keyframes moveBlur{to{transform:translate(80px, 40px)}}
-.hero-badge{background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); backdrop-filter:blur(10px); display:inline-block; padding:7px 16px; border-radius:30px; font-size:11px; font-weight:700; letter-spacing:1px; animation:float 3s infinite;}
-@keyframes float{0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)}}
-.hero h1{font-size:42px; margin:10px 0 0 0; line-height:1; font-weight:800; letter-spacing:-1px;}
-.hero p{font-size:13px; opacity:0.7; margin-top:12px;}
+.hero-badge{background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); backdrop-filter:blur(10px); display:inline-block; padding:7px 16px; border-radius:30px; font-size:11px; font-weight:700; letter-spacing:1px;}
+.food-logo-main{
+  width:110px; height:110px; background:linear-gradient(135deg,#fff,#fef3c7); border-radius:30px;
+  margin:18px auto 14px auto; display:flex; align-items:center; justify-content:center;
+  font-size:55px; box-shadow:0 15px 35px rgba(0,0,0,0.3), inset 0 2px 0 white;
+  animation:logoFloat 3s ease-in-out infinite, logoGlow 2s infinite alternate;
+}
+@keyframes logoFloat{0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-8px) rotate(2deg)}}
+@keyframes logoGlow{0%{box-shadow:0 15px 35px rgba(0,0,0,0.3)} 100%{box-shadow:0 20px 45px rgba(34,197,94,0.4), 0 0 20px rgba(34,197,94,0.3)}}
+.hero h1{font-size:28px; margin:0; line-height:1.1; font-weight:800;}
+.hero h1 span{background:linear-gradient(135deg,#86efac,#22c55e); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;}
+.hero p{font-size:12px; opacity:0.75; margin-top:8px; letter-spacing:0.3px;}
+
 .container{padding:16px; max-width:500px; margin:auto; margin-top:-40px; position:relative; z-index:5;}
-.card{background:rgba(255,255,255,0.92); backdrop-filter:blur(20px); padding:22px; border-radius:26px; box-shadow:0 15px 40px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,1); margin-bottom:18px; border:1px solid rgba(0,0,0,0.04); animation:cardIn 0.6s ease both;}
-@keyframes cardIn{from{transform:translateY(25px); opacity:0} to{transform:translateY(0); opacity:1}}
-.card:nth-child(2){animation-delay:0.1s} .card:nth-child(3){animation-delay:0.2s}
-.label{font-weight:700; font-size:11px; color:#1e293b; letter-spacing:0.8px; margin:16px 0 8px 2px; display:flex; align-items:center; gap:6px; text-transform:uppercase;}
+.card{background:white; padding:22px; border-radius:26px; box-shadow:0 15px 40px rgba(0,0,0,0.08); margin-bottom:16px; border:1px solid #fef3c7;}
+.label{font-weight:800; font-size:11px; color:#1e293b; letter-spacing:0.9px; margin:18px 0 8px 2px; display:flex; align-items:center; gap:7px; text-transform:uppercase;}
+.label i{width:18px; height:18px; border-radius:6px; display:inline-flex; align-items:center; justify-content:center; font-size:10px; color:white;}
+.label-food i{background:#f97316;} .label-qty i{background:#8b5cf6;} .label-time i{background:#ef4444;} .label-type i{background:#16a34a;} .label-loc i{background:#0ea5e9;} .label-phone i{background:#25D366;}
+
 .input-group{position:relative;}
-.input-group i{position:absolute; left:15px; top:50%; transform:translateY(-50%); color:#9ca3af; font-size:14px;}
-.input-group input, .input-group select{width:100%; padding:14px 14px 14px 42px; border-radius:14px; border:1.8px solid #e5e7eb; background:#f8fafc; font-size:14px; font-weight:500; transition:0.25s; outline:none; appearance:none;}
-.input-group input:focus{border-color:#16a34a; background:white; box-shadow:0 0 0 5px rgba(22,163,74,0.12); transform:translateY(-1px);}
-.input-group select{padding-right:35px;}
-.btn{width:100%; padding:17px; border:none; border-radius:16px; font-size:15px; font-weight:800; cursor:pointer; margin-top:16px; position:relative; overflow:hidden; letter-spacing:0.3px;}
-.btn-green{background:linear-gradient(135deg,#16a34a 0%, #15803d 100%); color:white; box-shadow:0 10px 25px rgba(22,163,74,0.35), inset 0 1px 0 rgba(255,255,255,0.3); transition:0.2s;}
+.input-group i.input-icon{position:absolute; left:16px; top:50%; transform:translateY(-50%); color:#9ca3af; font-size:14px;}
+.input-group input, .input-group select{
+  width:100%; padding:14px 14px 14px 44px; border-radius:14px; border:1.8px solid #e5e7eb;
+  background:#f8fafc; font-size:14px; font-weight:500; transition:0.25s; outline:none;
+}
+.input-group input:focus{border-color:#16a34a; background:white; box-shadow:0 0 0 5px rgba(22,163,74,0.12);}
+
+.btn{width:100%; padding:17px; border:none; border-radius:16px; font-size:15px; font-weight:800; cursor:pointer; margin-top:20px; position:relative; overflow:hidden;}
+.btn-green{background:linear-gradient(135deg,#16a34a,#15803d); color:white; box-shadow:0 10px 25px rgba(22,163,74,0.35); animation:pulse 2s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(22,163,74,0.5)} 70%{box-shadow:0 0 0 14px rgba(22,163,74,0)} 100%{box-shadow:0 0 0 0 rgba(22,163,74,0)}}
 .btn-green:active{transform:scale(0.97);}
-.btn-green .rocket{transition:0.6s; display:inline-block;}
-.btn-green:active .rocket{transform:translate(60px, -60px) rotate(25deg);}
-.live-header{display:flex; align-items:center; justify-content:center; gap:8px; font-weight:800; color:#111; font-size:15px; letter-spacing:0.5px;}
-.live-dot{width:12px; height:12px; background:#ef4444; border-radius:50%; display:inline-block; box-shadow:0 0 0 4px rgba(239,68,68,0.2), 0 0 15px #ef4444; animation:livePulse 1.2s infinite;}
-@keyframes livePulse{0%{box-shadow:0 0 0 0 rgba(239,68,68,0.4)} 70%{box-shadow:0 0 0 10px rgba(239,68,68,0)} 100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
-.live-card{display:flex; gap:14px; background:linear-gradient(135deg, #ffffff, #f0fdf4); border:1.5px solid #bbf7d0; padding:14px; border-radius:18px; margin-top:14px; align-items:center; animation:pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);}
-@keyframes pop{0%{transform:scale(0.85) translateY(15px); opacity:0} 100%{transform:scale(1) translateY(0); opacity:1}}
-.live-card img{width:82px; height:82px; border-radius:16px; object-fit:cover; box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+
+.live-header{display:flex; align-items:center; justify-content:center; gap:8px; font-weight:800; font-size:14px;}
+.live-dot{width:12px; height:12px; background:#ef4444; border-radius:50%; box-shadow:0 0 0 4px rgba(239,68,68,0.2), 0 0 12px #ef4444; animation:livePulse 1.2s infinite;}
+@keyframes livePulse{0%{transform:scale(1)} 50%{transform:scale(1.15)} 100%{transform:scale(1)}}
+
+.live-card{display:flex; gap:14px; background:linear-gradient(135deg,#ffffff,#f0fdf4); border:1.5px solid #bbf7d0; padding:14px; border-radius:18px; margin-top:14px; align-items:center; animation:pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);}
+@keyframes pop{0%{transform:scale(0.8); opacity:0} 100%{transform:scale(1); opacity:1}}
+.live-card img{width:80px; height:80px; border-radius:16px; object-fit:cover;}
 .call-btn{background:#111; color:white; padding:7px 14px; border-radius:24px; font-size:11px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:6px;}
 .wa-btn{background:#25D366; color:white; padding:7px 14px; border-radius:24px; font-size:11px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:6px;}
-.manual-box{background:linear-gradient(135deg,#dcfce7,#ecfdf5); padding:14px; border-radius:14px; border:2px dashed #16a34a;}
-.qr-box{text-align:center; background:linear-gradient(135deg,#fff7ed,#ffedd5); padding:18px; border-radius:18px; border:1.5px dashed #fb923c;}
 </style>
 </head>
 <body>
 
 <div class="hero">
 <div class="hero-badge">✨ 1,200+ MEALS SAVED TODAY</div>
-<h1>Turn Waste<br>Into Hope.</h1>
-<p>Post food in 10 sec. We deliver to NGOs in 30 mins.</p>
+<div class="food-logo-main">🍱</div>
+<h1>Share Food,<br><span>Save Lives</span></h1>
+<p>Post in 10 seconds. We deliver to NGOs in 30 mins. No waste.</p>
 </div>
 
 <div class="container">
 
-<div class="card" style="animation-delay:0.1s">
-<div class="label"><i class="fa-solid fa-clock" style="color:#f97316;"></i> COLLECT BEFORE</div>
-<div class="input-group"><i class="fa-regular fa-clock"></i><input type="time" id="expiryTime"></div>
+<div class="card">
+<!-- CORRECT ORDER NOW -->
 
-<div class="label"><i class="fa-solid fa-leaf" style="color:#16a34a;"></i> FOOD TYPE</div>
-<div class="input-group"><i class="fa-solid fa-utensils"></i><select id="type"><option>Pure Veg 🟢</option><option>Non-Veg 🔴</option></select></div>
+<div class="label label-food"><i class="fa-solid fa-bowl-rice"></i> FOOD NAME</div>
+<div class="input-group"><i class="fa-solid fa-utensils input-icon"></i><input type="text" id="foodName" placeholder="Ex: Veg Biryani"></div>
 
-<div class="label"><i class="fa-solid fa-location-dot" style="color:#ef4444;"></i> PICKUP LOCATION</div>
-<div class="input-group"><i class="fa-solid fa-store"></i><input type="text" id="address" placeholder="Hotel Name, Trichy"></div>
+<div class="label label-qty"><i class="fa-solid fa-layer-group"></i> QUANTITY</div>
+<div class="input-group"><i class="fa-solid fa-bowl-food input-icon"></i><input type="text" id="qty" placeholder="Ex: 50 Plates"></div>
 
-<div class="label"><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> YOUR WHATSAPP NUMBER</div>
-<div class="input-group"><i class="fa-solid fa-phone"></i><input type="tel" id="phone" placeholder="98xxxxxxxxxx"></div>
+<div class="label label-time"><i class="fa-solid fa-clock"></i> COLLECT BEFORE</div>
+<div class="input-group"><i class="fa-regular fa-clock input-icon"></i><input type="time" id="expiryTime"></div>
 
-<div class="label"><i class="fa-solid fa-bowl-food"></i> FOOD DETAILS</div>
-<div class="input-group" style="margin-bottom:8px;"><i class="fa-solid fa-bowl-rice"></i><input type="text" id="foodName" placeholder="Food Name - Ex: Biryani"></div>
-<div class="input-group"><i class="fa-solid fa-layer-group"></i><input type="text" id="qty" placeholder="Quantity - Ex: 50 plates"></div>
+<div class="label label-type"><i class="fa-solid fa-leaf"></i> FOOD TYPE</div>
+<div class="input-group"><i class="fa-solid fa-seedling input-icon"></i><select id="type"><option>Pure Veg 🟢</option><option>Non-Veg 🔴</option></select></div>
 
-<button class="btn btn-green" onclick="postFood()"><span class="rocket">🚀</span> Post Food - Go LIVE Now</button>
+<div class="label label-loc"><i class="fa-solid fa-location-dot"></i> PICKUP LOCATION</div>
+<div class="input-group"><i class="fa-solid fa-store input-icon"></i><input type="text" id="address" placeholder="Hotel Name, Trichy"></div>
+
+<div class="label label-phone"><i class="fa-solid fa-phone"></i> YOUR WHATSAPP NUMBER</div>
+<div class="input-group"><i class="fa-solid fa-phone-volume input-icon"></i><input type="tel" id="phone" placeholder="98xxxxxxxxxx"></div>
+
+<button class="btn btn-green" onclick="postFood()"><i class="fa-solid fa-rocket"></i> Post Food - Go LIVE Now</button>
 <p id="successMsg" style="text-align:center; color:#16a34a; font-weight:800; font-size:12px; margin-top:10px;"></p>
 </div>
 
-<div class="card" style="animation-delay:0.2s">
+<div class="card">
 <div class="live-header"><span class="live-dot"></span> LIVE - Food Available Now</div>
 <div id="liveFeed"></div>
 <p id="emptyMsg" style="text-align:center; color:#9ca3af; font-size:12px; margin-top:14px;">No food now. Be the first to post!</p>
 </div>
 
-<div class="card" style="animation-delay:0.3s; text-align:center;">
-<h3 style="margin:0; font-size:18px;">Become a City Partner <i class="fa-solid fa-crown" style="color:#f59e0b;"></i></h3>
-<p style="font-size:11px; color:#6b7280; margin:4px 0;">Earn Rs 15k/month</p>
+<div class="card" style="text-align:center;">
+<h3 style="margin:0;">Become City Partner <i class="fa-solid fa-crown" style="color:#f59e0b;"></i></h3>
+<p style="font-size:11px; color:#6b7280;">Earn Rs 15k/month</p>
 <h2 style="color:#f97316; margin:8px 0; font-size:26px; font-weight:800;">Rs 299 Only</h2>
-<div class="manual-box" style="text-align:left; margin-bottom:12px;">
-<p style="margin:0; font-weight:800; color:#15803d; font-size:11px;">100% WORKING METHOD:</p>
-<p style="font-size:12px; margin:6px 0;">Pay to: <b style="background:yellow; padding:2px 6px; border-radius:6px;">8825461353</b><br><small>UPI: harinisubramaniyan008@oksbi</small></p>
+<div style="background:linear-gradient(135deg,#dcfce7,#ecfdf5); padding:12px; border-radius:14px; border:2px dashed #16a34a; text-align:left; margin-bottom:12px;">
+<p style="margin:0; font-weight:800; font-size:11px; color:#15803d;">PAYMENT:</p>
+<p style="font-size:12px; margin:4px 0;">Number: <b style="background:yellow; padding:2px 6px; border-radius:6px;">8825461353</b> | UPI: harinisubramaniyan008@oksbi</p>
 </div>
-<div class="qr-box"><img id="qrImg" src="" width="150" height="150" style="background:white; padding:8px; border-radius:12px;"></div>
-<button class="btn" style="background:#111; color:white; margin-top:12px; border-radius:14px;" onclick="openProof()">I Paid - Submit Proof</button>
-<div id="proofSection" style="display:none; margin-top:12px; text-align:left;">
-<div class="input-group"><i class="fa-solid fa-receipt"></i><input type="text" id="utr" placeholder="Enter UTR ID"></div>
-<button class="btn btn-green" onclick="paidDone()">Verify Now</button>
-</div>
+<div style="background:#fff7ed; padding:14px; border-radius:14px; border:1.5px dashed #fb923c;"><img id="qrImg" src="" width="150" height="150" style="border-radius:10px;"></div>
 </div>
 
 </div>
@@ -104,25 +116,20 @@ body{margin:0; background:#fefce8; }
 <script>
 var upiId = "harinisubramaniyan008@oksbi";
 document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=${upiId}&pn=Harini&am=299&cu=INR`;
-function getFoodImage(n){ n=n.toLowerCase(); if(n.includes('biryani')||n.includes('biriyani')) return 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400'; return 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400'; }
-window.onload = function(){ var s=JSON.parse(localStorage.getItem('unavo_v4')||'[]'); s.forEach(showLive); if(s.length>0) document.getElementById('emptyMsg').style.display='none'; }
+function getFoodImage(n){ n=n.toLowerCase(); if(n.includes('biryani')||n.includes('biriyani')) return 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400'; if(n.includes('rice')) return 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400'; return 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400'; }
+window.onload = function(){ var s=JSON.parse(localStorage.getItem('unavo_v5')||'[]'); s.forEach(showLive); if(s.length>0) document.getElementById('emptyMsg').style.display='none'; }
 function postFood(){
   var food=document.getElementById('foodName').value, qty=document.getElementById('qty').value, expiry=document.getElementById('expiryTime').value, type=document.getElementById('type').value, address=document.getElementById('address').value, phone=document.getElementById('phone').value;
   if(!food||!qty||!expiry||!address||!phone){alert("Fill all fields"); return;}
   var data={food:food, qty:qty, expiry:expiry, type:type, address:address, phone:phone, img:getFoodImage(food)};
-  showLive(data);
-  var saved=JSON.parse(localStorage.getItem('unavo_v4')||'[]'); saved.unshift(data); localStorage.setItem('unavo_v4', JSON.stringify(saved));
-  document.getElementById('emptyMsg').style.display='none';
-  document.getElementById('successMsg').innerText="🔥 LIVE! Food posted - NGOs notified!";
-  if(navigator.vibrate) navigator.vibrate([100,50,100]);
+  showLive(data); var saved=JSON.parse(localStorage.getItem('unavo_v5')||'[]'); saved.unshift(data); localStorage.setItem('unavo_v5', JSON.stringify(saved));
+  document.getElementById('emptyMsg').style.display='none'; document.getElementById('successMsg').innerText="🔥 LIVE! Posted successfully!";
 }
 function showLive(d){
   var div=document.createElement('div'); div.className='live-card';
-  div.innerHTML=`<img src="${d.img}"><div style="flex:1; text-align:left;"><b style="font-size:14px;">${d.food}</b> - ${d.qty}<br><small>${d.type} | Before <b style="color:red;">${d.expiry}</b></small><br><small style="color:#6b7280;"><i class="fa-solid fa-location-dot"></i> ${d.address}</small><div style="display:flex; gap:8px; margin-top:8px;"><a href="tel:+91${d.phone}" class="call-btn"><i class="fa-solid fa-phone"></i> Call</a><a href="https://wa.me/91${d.phone}" class="wa-btn"><i class="fa-brands fa-whatsapp"></i> Chat</a></div></div>`;
+  div.innerHTML=`<img src="${d.img}"><div style="flex:1; text-align:left;"><b style="font-size:14px;"><i class="fa-solid fa-bowl-rice" style="color:#f97316;"></i> ${d.food}</b> - ${d.qty}<br><small>${d.type} | Before <b style="color:red;">${d.expiry}</b></small><br><small style="color:#6b7280;"><i class="fa-solid fa-location-dot" style="color:#ef4444;"></i> ${d.address}</small><div style="display:flex; gap:8px; margin-top:8px;"><a href="tel:+91${d.phone}" class="call-btn"><i class="fa-solid fa-phone"></i> Call</a><a href="https://wa.me/91${d.phone}" class="wa-btn"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a></div></div>`;
   document.getElementById('liveFeed').prepend(div);
 }
-function openProof(){ document.getElementById('proofSection').style.display='block'; }
-function paidDone(){ var u=document.getElementById('utr').value; if(u.length<8){alert("Enter valid UTR"); return;} window.open(`https://wa.me/918825461353?text=Paid Rs 299 UTR: ${u}`, '_blank'); }
 </script>
 </body>
 </html>
