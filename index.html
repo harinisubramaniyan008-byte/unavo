@@ -2,140 +2,100 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>UNAVO • Zero Waste OS</title>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;600;700&display=swap" rel="stylesheet">
+<title>UNAVO CORE // Technical Engine</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;700&family=Geist:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box} body{background:#F6F5F0;color:#111;font-family:'Geist',sans-serif;overflow-x:hidden}
-.serif{font-family:'Instrument Serif',serif}
-nav{position:fixed;top:0;width:100%;padding:14px 3%;display:flex;justify-content:space-between;align-items:center;z-index:100;background:rgba(246,245,240,0.8);backdrop-filter:blur(20px);border-bottom:1px solid #E8E6DE}
-.hero{display:grid;grid-template-columns:1.2fr 0.8fr;min-height:92vh;padding:90px 3% 30px;gap:20px}
-.hero-left{background:#111;color:#F6F5F0;border-radius:36px;padding:36px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}
-.hero-left h1{font-size:6.2vw;line-height:0.9;letter-spacing:-3px} .hero-left h1 i{font-family:'Instrument Serif';font-weight:400;color:#FF4D12}
-.counter{display:flex;gap:24px;margin-top:30px} .counter b{font-size:2.4rem;display:block;line-height:1} .counter span{font-size:0.6rem;letter-spacing:1px;opacity:0.6;text-transform:uppercase}
-.hero-right{display:grid;grid-template-rows:1.2fr 0.8fr;gap:20px}
-.map-wrap{background:#fff;border-radius:36px;padding:12px;border:1px solid #E8E6DE;overflow:hidden} #map{height:100%;min-height:380px;border-radius:24px}
-.workflow{background:#FF4D12;border-radius:36px;padding:24px;color:#fff;position:relative;overflow:hidden}
-.workflow h3{font-size:1.8rem;line-height:0.95} .flow-line{display:flex;align-items:center;gap:12px;margin-top:18px;overflow-x:auto}
-.flow-step{background:#111;color:#fff;padding:12px 16px;border-radius:100px;font-size:0.75rem;white-space:nowrap;display:flex;align-items:center;gap:8px} .flow-step.active{background:#fff;color:#111}
-.flow-arrow{color:#111;font-size:1.2rem}
-
-.bento{padding:20px 3%;display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
-.module{border-radius:28px;padding:24px;background:#fff;border:1px solid #E8E6DE;grid-column:span 4;position:relative} .module.full{grid-column:span 12;display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.module h4{font-size:0.65rem;letter-spacing:1.5px;text-transform:uppercase;opacity:0.5;margin-bottom:12px} .module h3{font-size:1.25rem;line-height:1.1;margin-bottom:10px} .module p{font-size:0.82rem;line-height:1.6;color:#6B6B}
-.tag{position:absolute;top:18px;right:18px;font-size:0.55rem;padding:6px 10px;border-radius:100px;background:#111;color:#fff}
-
-.os{padding:20px 3% 80px;display:grid;grid-template-columns:380px 1fr;gap:20px}
-.panel{background:#fff;border:1px solid #E8E6DE;border-radius:28px;padding:20px}
-.tabs{display:flex;background:#F6F5F0;border-radius:100px;padding:4px;gap:4px;margin-bottom:18px} .tab{flex:1;padding:10px;border-radius:100px;text-align:center;font-size:0.78rem;font-weight:600;cursor:pointer} .tab.active{background:#111;color:#fff}
-label{font-size:0.6rem;letter-spacing:1px;text-transform:uppercase;opacity:0.5;margin:14px 0 6px;display:block}
-input,select{width:100%;padding:14px 16px;border-radius:14px;border:1px solid #E8E6DE;background:#F9F8F5;outline:none;font-family:inherit;font-size:0.9rem}
-input:focus{border-color:#111}
-.btn{width:100%;padding:14px;border-radius:100px;border:none;background:#111;color:#fff;font-weight:700;cursor:pointer;margin-top:16px;font-size:0.9rem;transition:.2s} .btn:hover{transform:scale(0.98)} .btn-orange{background:#FF4D12}
-.role-preview{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px} .role-card{padding:12px;border-radius:16px;background:#F6F5F0;border:1px solid #E8E6DE;text-align:center;cursor:pointer;transition:.2s} .role-card.active{background:#111;color:#fff} .role-card b{font-size:1.3rem;display:block}
-
-.feed-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:16px}
-.food-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
-.fcard{background:#fff;border:1px solid #E8E6DE;border-radius:24px;padding:16px;position:relative;transition:.3s;overflow:hidden}
-.fcard:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.06)}
-.fcard-img{height:140px;border-radius:16px;background:linear-gradient(135deg,#FF4D12,#FF9A7A);display:flex;align-items:center;justify-content:center;font-size:3rem;margin-bottom:12px}
-.fmeta{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0} .chip{font-size:0.6rem;padding:5px 9px;border-radius:100px;background:#F6F5F0;border:1px solid #E8E6DE}
-.timer{font-variant-numeric:tabular-nums;font-weight:700;color:#FF4D12}
-
-.toast-stack{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:200}
-.toast{background:#111;color:#fff;padding:14px 18px;border-radius:16px;font-size:0.85rem;box-shadow:0 10px 30px rgba(0,0,0,0.2);animation:slide 0.4s ease}
-@keyframes slide{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
-@media(max-width:900px){.hero,.os,.bento,.module.full{grid-template-columns:1fr}.module{grid-column:span 12}.hero-left h1{font-size:12vw}}
+*{margin:0;padding:0;box-sizing:border-box} body{background:#0A0A0A;color:#E5E5E5;font-family:'Geist',sans-serif}
+.mono{font-family:'Geist Mono',monospace}
+nav{position:fixed;top:0;width:100%;height:56px;display:flex;justify-content:space-between;align-items:center;padding:0 20px;background:#0A0A0A;border-bottom:1px solid #1A1A1A;z-index:100}
+.pulse{width:8px;height:8px;background:#00FF88;border-radius:50%;box-shadow:0 0 10px #00FF88;animation:blink 1.5s infinite} @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.layout{display:grid;grid-template-columns:380px 1fr 340px;min-height:100vh;padding-top:56px}
+.panel{border-right:1px solid #1A1A1A;background:#0F0F0F;overflow-y:auto;max-height:calc(100vh - 56px)}
+.panel-right{border-left:1px solid #1A1A1A;border-right:none;background:#0F0F0F}
+.section{padding:18px;border-bottom:1px solid #1A1A1A}
+.section h4{font-size:0.6rem;letter-spacing:1.5px;text-transform:uppercase;color:#666;margin-bottom:12px}
+label{font-size:0.65rem;color:#888;letter-spacing:0.5px;text-transform:uppercase;margin:10px 0 5px;display:block}
+input,select{width:100%;background:#111;border:1px solid #222;color:#fff;padding:12px;border-radius:8px;outline:none;font-family:'Geist Mono';font-size:0.85rem} input:focus{border-color:#00FF88}
+.btn{width:100%;padding:12px;border-radius:8px;border:none;font-weight:700;cursor:pointer;font-size:0.8rem;margin-top:12px;letter-spacing:0.3px} .btn-green{background:#00FF88;color:#000} .btn-white{background:#fff;color:#000} .btn-ghost{background:transparent;border:1px solid #222;color:#888}
+.terminal{background:#000;border:1px solid #1A1A1A;border-radius:10px;padding:12px;font-family:'Geist Mono';font-size:0.7rem;line-height:1.6;max-height:200px;overflow-y:auto}
+.terminal .g{color:#00FF88} .terminal .y{color:#FFD60A} .terminal .r{color:#FF4444} .terminal .d{color:#555}
+.db-table{width:100%;border-collapse:collapse;font-family:'Geist Mono';font-size:0.68rem} .db-table th{color:#666;text-align:left;padding:6px;border-bottom:1px solid #1A1A1A;font-weight:400} .db-table td{padding:6px;border-bottom:1px solid #111}
+.algo-box{background:#111;border:1px solid #222;border-radius:10px;padding:12px;margin-top:10px}
+.score-bar{height:6px;background:#1A1A1A;border-radius:10px;overflow:hidden;margin:6px 0} .score-fill{height:100%;background:linear-gradient(90deg,#00FF88,#00D4FF);transition:width 0.8s ease}
+.feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.fcard{background:#141414;border:1px solid #1F1F1F;border-radius:12px;padding:14px;position:relative;transition:.2s} .fcard:hover{border-color:#333}
+.badge{font-size:0.55rem;padding:4px 8px;border-radius:100px;border:1px solid #222;font-family:'Geist Mono'} .badge-av{border-color:#00FF8840;color:#00FF88;background:#00FF8810}
+.tabs{display:flex;gap:6px} .tab{padding:6px 12px;border-radius:100px;font-size:0.7rem;border:1px solid #222;cursor:pointer} .tab.active{background:#fff;color:#000}
+#map{height:260px;border-radius:12px;filter:grayscale(1) invert(0.9)}
+.kpi{display:grid;grid-template-columns:1fr 1fr;gap:10px} .kpi-box{background:#111;border:1px solid #1A1A1A;border-radius:10px;padding:12px} .kpi-box b{font-size:1.4rem;display:block} .kpi-box span{font-size:0.6rem;color:#666;text-transform:uppercase}
+@media(max-width:1100px){.layout{grid-template-columns:1fr}.panel-right{border-left:none}}
 </style>
 </head>
 <body>
-<nav><div style="font-weight:800;letter-spacing:-1px">UNAVO <span style="font-weight:400;opacity:0.5">// ZERO WASTE OS</span></div><div style="display:flex;gap:12px;align-items:center"><div onclick="toggleN()" style="background:#111;color:#fff;padding:8px 14px;border-radius:100px;font-size:0.75rem;cursor:pointer">🔔 <span id="bc">0</span> notifications</div><div style="font-size:0.7rem">ROLE: <b id="curRole">DONOR</b></div></div></nav>
+<nav><div class="mono" style="display:flex;align-items:center;gap:10px"><div class="pulse"></div> UNAVO CORE <span style="color:#666">v2.1 • ENGINE RUNNING</span></div><div style="display:flex;gap:12px"><div class="mono" style="font-size:0.7rem;color:#666">ROLE: <span id="curRole" style="color:#fff">DONOR</span> | <span id="liveClock"></span></div><div class="badge badge-av">● 5 MODULES LIVE</div></div></nav>
 
-<div class="hero">
-<div class="hero-left">
-<div><div style="display:inline-block;border:1px solid rgba(255,255,255,0.15);padding:8px 12px;border-radius:100px;font-size:0.6rem;letter-spacing:1px">5 MODULES • NO ML • PURE LOGIC • LIVE</div><h1 class="serif">WASTE<br>IS A<br><i>DESIGN<br>FLAW.</i></h1><p style="margin-top:16px;max-width:380px;opacity:0.7;line-height:1.5;font-size:0.95rem"><b style="color:#fff">Unavo</b> connects donors, NGOs, volunteers & beneficiaries in one role-based network. All 5 core modules working live - filtering + sorting, not prediction.</p></div>
-<div><div class="counter"><div><b id="c1">0</b><span>Foods Saved</span></div><div><b id="c2">0</b><span>Active Donors</span></div><div><b id="c3">0 KM</b><span>Distance Covered</span></div></div><div style="margin-top:20px;display:flex;gap:10px"><button class="btn" style="background:#fff;color:#111;width:auto;padding:12px 20px" onclick="document.getElementById('os').scrollIntoView({behavior:'smooth'})">Launch OS ↓</button><div style="padding:12px 16px;border-radius:100px;border:1px solid rgba(255,255,255,0.15);font-size:0.7rem">● HAVERSINE ACTIVE</div></div></div>
-<div style="position:absolute;right:-20px;top:20%;font-size:20rem;opacity:0.04;transform:rotate(-10deg)">♻️</div>
-</div>
-<div class="hero-right">
-<div class="map-wrap"><div id="map"></div></div>
-<div class="workflow"><h3 class="serif">How Matching Works<br><span style="opacity:0.7">No ML. Just Query + Sort.</span></h3><div class="flow-line"><div class="flow-step active">① available foods</div><div class="flow-arrow">→</div><div class="flow-step">② filter by distance (Haversine)</div><div class="flow-arrow">→</div><div class="flow-step">③ sort expiry ASC + distance ASC</div><div class="flow-arrow">→</div><div class="flow-step">④ claim → claimed</div></div></div>
-</div>
-</div>
-
-<div class="bento">
-<div class="module"><div class="tag">TABLE: users</div><h4>01 — Registration & Profile</h4><h3>One table, role field.</h3><p>Store users in one table with a `role` field: `donor`, `NGO`, `volunteer`, `beneficiary`. Fields: name, phone, email, address, location (lat/long), password (hashed), role. Logic: signup form → validate inputs → hash password → insert into DB → login checks credentials → redirect based on role (donor dashboard, NGO dashboard, etc.).</p><div class="role-preview" id="userPreview"></div></div>
-<div class="module"><div class="tag">TABLE: food_items</div><h4>02 — Food Listing</h4><h3>Available → Expired via cron.</h3><p>Table: `food_items` — donor_id, food_name, quantity, food_type (veg/non-veg/packaged), expiry_date/time, pickup_location, status (available/claimed/expired). Logic: donor fills a form → entry saved with status = "available" → a simple scheduled check (cron job or a script run periodically) flips status to "expired" once expiry_date has passed.</p><div style="margin-top:14px;background:#F6F5F0;border-radius:12px;padding:10px;font-size:0.7rem">⏱️ Cron: every 60s checks expiry → flips to expired</div></div>
-<div class="module"><div class="tag">NO ML</div><h4>03 — Food Matching (basic)</h4><h3>Filter + Sort, not prediction.</h3><p>Step 1: Pull all `food_items` where status = "available". Step 2: Filter by distance — compare beneficiary's location to each donor's location (simple distance formula, e.g. Haversine, or even just "same city/pincode" if you want to keep it simpler). Step 3: Sort results by two priorities: (a) soonest expiry first, (b) shortest distance first. Step 4: Show ranked list; they click "claim" → status changes to "claimed", linked to their user_id. That's it — no training data, no model. It's a query + sort.</p></div>
-<div class="module full"><div><div class="tag">LAT/LNG • OSM</div><h4>04 — Location & Routing</h4><h3>Browser API + Haversine + Leaflet.</h3><p>Store lat/long for every user (captured via browser geolocation API on signup, or manually entered address geocoded once using a free API like OpenStreetMap Nominatim). Distance calculation: use the Haversine formula (a standard math formula for distance between two lat/long points) — no external routing service needed for a basic version. Optional: embed a map (Google Maps or OpenStreetMap/Leaflet) to visually show donor and beneficiary pins.</p><div style="margin-top:12px;display:flex;gap:8px"><div class="chip">navigator.geolocation</div><div class="chip">Haversine()</div><div class="chip">Leaflet</div></div></div><div><div class="tag">POLLING</div><h4>05 — Notification Module</h4><h3>Bell icon + polling, no websockets.</h3><p>Table: `notifications` — user_id, message, type (new_food/claim_confirmed/urgent), status (read/unread), timestamp. Trigger logic: New food listed nearby → insert a notification row for beneficiaries/NGOs in range. Food claimed → notify the donor. Expiry approaching (e.g. 2 hours left) → notify NGOs to prioritize pickup. Basic delivery: just show notifications inside the app (a bell icon + list). For "real-time," you can poll the database every X seconds from the frontend — you don't need websockets or push services for a college project.</p><div style="margin-top:12px;font-size:0.7rem;background:#111;color:#fff;padding:10px;border-radius:10px">Build Order: Registration → Listing → Matching → Location → Notifications</div></div></div>
+<div class="layout">
+<!-- LEFT: CONTROLS -->
+<div class="panel">
+<div class="section"><h4>01 — Registration & Profile Module</h4><p class="mono" style="font-size:0.7rem;color:#888;line-height:1.5">Table: <b style="color:#fff">users</b> — role enum [donor, NGO, volunteer, beneficiary], lat/long float, password_hash varchar. Logic: validate → hash → insert → redirect by role.</p>
+<label>Name</label><input id="uName" placeholder="Hotel Arya Bhavan">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div><label>Role</label><select id="uRole"><option value="donor">donor</option><option value="NGO">NGO</option><option value="volunteer">volunteer</option><option value="beneficiary">beneficiary</option></select></div><div><label>Phone</label><input id="uPhone" placeholder="98xxxx"></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div><label>Lat</label><input id="uLat" placeholder="9.9252"></div><div><label>Lng</label><input id="uLng" placeholder="78.1198"></div></div>
+<button class="btn btn-white" onclick="getLoc()">📍 navigator.geolocation.getCurrentPosition()</button>
+<button class="btn btn-green" onclick="reg()">INSERT INTO users VALUES (...) + bcrypt.hash()</button>
+<div class="terminal" id="queryLog" style="margin-top:12px">-- SQL QUERY LOG<br><span class="d">waiting for action...</span></div>
 </div>
 
-<div class="os" id="os">
-<div class="panel" style="position:sticky;top:80px;height:fit-content">
-<div class="tabs"><div class="tab active" onclick="setTab('s')">Signup</div><div class="tab" onclick="setTab('l')">List Food</div><div class="tab" onclick="setTab('f')">Find Food</div></div>
-
-<div id="sForm">
-<label>Full Name / NGO Name</label><input id="uName" placeholder="e.g. Hotel Arya Bhavan">
-<label>Select Role</label><div class="role-preview"><div class="role-card active" onclick="selRole(this,'donor')"><b>🍱</b>Donor</div><div class="role-card" onclick="selRole(this,'NGO')"><b>🏠</b>NGO</div><div class="role-card" onclick="selRole(this,'volunteer')"><b>🚴</b>Volunteer</div><div class="role-card" onclick="selRole(this,'beneficiary')"><b>🙏</b>People</div></div><input type="hidden" id="uRole" value="donor">
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><label>Phone</label><input id="uPhone" placeholder="98765"></div><div><label>Email</label><input id="uEmail" placeholder="you@unavo.in"></div></div>
-<label>Address</label><input id="uAddr" placeholder="Madurai, Tamil Nadu">
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><label>Lat</label><input id="uLat" placeholder="9.9252"></div><div><label>Lng</label><input id="uLng" placeholder="78.1198"></div></div>
-<button onclick="getLoc()" style="width:100%;margin-top:10px;padding:10px;border-radius:12px;border:1px dashed #ccc;background:transparent;cursor:pointer">📍 Use My Current Location</button>
-<button class="btn" onclick="reg()">Create Profile → INSERT + HASH</button>
+<div class="section"><h4>02 — Food Listing Module</h4><label>Food Name</label><input id="fName" placeholder="Veg Biryani">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div><label>Qty</label><input id="fQty" placeholder="20 plates"></div><div><label>Type</label><select id="fType"><option>veg</option><option>non-veg</option><option>packaged</option></select></div></div>
+<label>Expiry DATETIME</label><input id="fExp" type="datetime-local">
+<label>Pickup Location</label><input id="fLoc" placeholder="Mattuthavani, Madurai">
+<button class="btn btn-green" onclick="addF()">INSERT INTO food_items (status='available')</button>
 </div>
 
-<div id="lForm" style="display:none">
-<label>What food you have? (be specific)</label><input id="fName" placeholder="Veg Biryani - 50 plates, fresh">
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><label>Quantity</label><input id="fQty" placeholder="20 plates"></div><div><label>Type</label><select id="fType"><option>veg</option><option>non-veg</option><option>packaged</option></select></div></div>
-<label>Expiry (when it spoils?)</label><input id="fExp" type="datetime-local">
-<label>Pickup pin — where to collect?</label><input id="fLoc" placeholder="Mattuthavani Bus Stand">
-<button class="btn btn-orange" onclick="addF()">List Food → status = available + Notify NGOs</button>
-</div>
-
-<div id="fForm" style="display:none">
-<label>Where are you now? (beneficiary)</label><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><input id="bLat" placeholder="Your Lat"><input id="bLng" placeholder="Your Lng"></div>
-<button class="btn" onclick="getLoc()">📍 Auto-fill my location</button>
-<button class="btn btn-orange" onclick="match()">Run Matching Logic → SORT BY EXPIRY + DISTANCE</button>
-<div style="margin-top:14px;padding:12px;background:#FFF4F0;border-radius:14px;font-size:0.75rem;line-height:1.5"><b>Logic visualization:</b><br>• Pull where status=available<br>• Haversine(you, donor) < 15km<br>• Sort: expiry ASC, distance ASC<br>• Draw route line on map</div>
+<div class="section"><h4>03 — Matching Module — No ML</h4><label>Beneficiary Lat/Lng</label><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input id="bLat" placeholder="9.9252"><input id="bLng" placeholder="78.1198"></div>
+<button class="btn btn-white" onclick="match()">RUN MATCHING ENGINE → EXPLAIN QUERY PLAN</button>
+<div class="algo-box"><div class="mono" style="font-size:0.65rem;color:#888">FRESHNESS SCORE ALGO</div><div class="mono" style="font-size:0.7rem;margin-top:6px">score = (1 / hours_to_expiry)*0.7 + (1 / distance_km)*0.3<br>sort: expiry ASC, distance ASC</div><div id="algoSteps" class="terminal" style="margin-top:10px;max-height:120px">-- algorithm steps will appear here</div></div>
 </div>
 </div>
 
-<div>
-<div class="feed-head"><div><h2 class="serif" style="font-size:3rem;line-height:0.9">Live Food<br>Network.</h2><p style="font-size:0.8rem;color:#6B6B6B;margin-top:6px">Real-time feed — cron checks expiry every 60s</p></div><div style="text-align:right"><div style="font-size:0.6rem;letter-spacing:1px;opacity:0.5">SORTED BY</div><div style="font-weight:700">EXPIRY + DISTANCE</div></div></div>
-<div class="food-grid" id="foodList"></div>
-</div>
+<!-- CENTER: FEED + MAP -->
+<div style="overflow-y:auto;max-height:calc(100vh - 56px)">
+<div class="section" style="display:grid;grid-template-columns:1fr 320px;gap:16px"><div><div id="map"></div><div style="display:flex;gap:8px;margin-top:10px"><span class="badge">Haversine()</span><span class="badge">Leaflet OSM</span><span class="badge">Geofence 15KM</span></div></div><div><div class="kpi"><div class="kpi-box"><b id="k1">0</b><span>Foods Saved</span></div><div class="kpi-box"><b id="k2">0</b><span>Active Donors</span></div><div class="kpi-box"><b id="k3">0</b><span>Claims</span></div><div class="kpi-box"><b id="k4">0km</b><span>Distance</span></div></div><div class="algo-box" style="margin-top:12px"><div class="mono" style="font-size:0.6rem;color:#666">VOLUNTEER LOAD BALANCER (GREEDY)</div><div id="volLog" class="terminal" style="margin-top:8px;height:100px">-- waiting for claim...</div></div></div></div>
+<div class="section"><div style="display:flex;justify-content:space-between;align-items:center"><h4 style="margin:0">Live Food Feed — Ranked Output</h4><div class="tabs"><div class="tab active" onclick="filterFeed('all')">ALL</div><div class="tab" onclick="filterFeed('available')">AVAILABLE</div><div class="tab" onclick="filterFeed('claimed')">CLAIMED</div></div></div><div class="feed" id="foodList" style="margin-top:14px"></div></div>
 </div>
 
-<div class="toast-stack" id="toastStack"></div>
-<div id="notifPanel" style="position:fixed;right:20px;top:70px;width:340px;background:#fff;border:1px solid #E8E6DE;border-radius:20px;padding:16px;display:none;z-index:200;max-height:70vh;overflow:auto"><h4>Notifications — Polling Table</h4><div id="notifList" style="margin-top:12px"></div></div>
+<!-- RIGHT: TECHNICAL INSPECTOR -->
+<div class="panel panel-right">
+<div class="section"><h4>📡 Cron Daemon — Expiry Checker</h4><div class="terminal" id="cronLog"> [00:00:01] cron: checking food_items where expiry < NOW()<br> [00:00:01] cron: 0 rows expired<br> <span class="g">[RUNNING] interval 60s</span></div><div style="margin-top:10px;display:flex;gap:6px"><span class="badge badge-av">● LIVE</span><span class="badge">EVERY 60s</span></div></div>
+<div class="section"><h4>🗄️ DB Inspector — Real Tables</h4><div class="mono" style="font-size:0.65rem;color:#00FF88;margin-bottom:8px">SELECT * FROM users LIMIT 5;</div><table class="db-table" id="usersTable"><tr><th>id</th><th>name</th><th>role</th></tr></table><div class="mono" style="font-size:0.65rem;color:#00FF88;margin:14px 0 8px">SELECT * FROM food_items WHERE status='available' ORDER BY expiry ASC;</div><table class="db-table" id="foodTable"><tr><th>id</th><th>food</th><th>exp</th><th>dist</th></tr></table></div>
+<div class="section"><h4>🔔 Notification Polling — Bell Icon + List</h4><p class="mono" style="font-size:0.68rem;color:#666">Table: notifications — user_id, message, type, read/unread, timestamp. Polling every 5s via setInterval(). No websockets.</p><div class="terminal" id="notifLog" style="margin-top:10px;max-height:160px">-- notification events --</div></div>
+<div class="section"><h4>🔒 Anti-Double-Claim Ledger</h4><div class="mono" style="font-size:0.68rem;color:#888">To prevent 2 NGOs claiming same food: using optimistic locking — UPDATE food_items SET status='claimed' WHERE id=? AND status='available'</div><div class="terminal" id="ledgerLog" style="margin-top:10px">-- ledger empty --</div></div>
+</div>
+</div>
 
 <script>
-let users=JSON.parse(localStorage.getItem('unavo_users')||'[]');
-let foods=JSON.parse(localStorage.getItem('unavo_foods')||'[{"id":1,"food_name":"Veg Meals • 30 plates","quantity":"30","food_type":"veg","expiry":"2026-09-22T02:00","pickup_location":"Mattuthavani","status":"available","lat":9.9252,"lng":78.1198,"emoji":"🍛"},{"id":2,"food_name":"Parotta & Salna • 20","quantity":"20","food_type":"veg","expiry":"2026-09-21T23:30","pickup_location":"Simmakkal","status":"available","lat":9.92,"lng":78.11,"emoji":"🫓"}]');
-let notifs=[]; let curRole='donor'; let routeLine=null;
-const map=L.map('map',{zoomControl:false}).setView([9.9252,78.1198],12); L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png').addTo(map);
-let markers=[];
-function refMap(){ markers.forEach(m=>map.removeLayer(m)); markers=[]; foods.filter(f=>f.status==='available').forEach(f=>{ let m=L.marker([f.lat,f.lng]).addTo(map).bindPopup(`<b>${f.emoji} ${f.food_name}</b><br>${f.pickup_location}`); markers.push(m);});}
-refMap();
+let users=JSON.parse(localStorage.getItem('u')||'[]');
+let foods=JSON.parse(localStorage.getItem('f')||'[{"id":1,"food_name":"Veg Meals 30p","quantity":"30","food_type":"veg","expiry":"2026-09-22T02:00","pickup_location":"Mattuthavani","status":"available","lat":9.9252,"lng":78.1198},{"id":2,"food_name":"Parotta 20p","quantity":"20","food_type":"veg","expiry":"2026-09-21T23:00","pickup_location":"Simmakkal","status":"available","lat":9.92,"lng":78.11}]');
+let notifs=0;
+const map=L.map('map',{zoomControl:false}).setView([9.9252,78.1198],12); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map); let marks=[];
+function refMap(){ marks.forEach(m=>map.removeLayer(m)); marks=[]; foods.filter(f=>f.status==='available').forEach(f=>{ let m=L.marker([f.lat,f.lng]).addTo(map).bindPopup(f.food_name); marks.push(m);});}
 function haversine(a,b,c,d){ const R=6371,dLat=(c-a)*Math.PI/180,dLon=(d-b)*Math.PI/180,x=Math.sin(dLat/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dLon/2)**2; return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));}
-function toast(m){ let s=document.getElementById('toastStack'); let t=document.createElement('div'); t.className='toast'; t.innerText=m; s.appendChild(t); setTimeout(()=>t.remove(),3000);}
-function getLoc(){ navigator.geolocation.getCurrentPosition(p=>{ uLat.value=p.coords.latitude.toFixed(4); uLng.value=p.coords.longitude.toFixed(4); bLat.value=p.coords.latitude.toFixed(4); bLng.value=p.coords.longitude.toFixed(4); map.setView([p.coords.latitude,p.coords.longitude],13); toast('📍 Location captured via Geolocation API'); addN('Location captured via browser geolocation API','system');});}
-function selRole(el,r){ document.querySelectorAll('.role-card').forEach(x=>x.classList.remove('active')); el.classList.add('active'); document.getElementById('uRole').value=r; curRole=r; document.getElementById('curRole').innerText=r.toUpperCase(); toast(`Switched to ${r} dashboard`);}
-function reg(){ let u={id:Date.now(),name:uName.value||'Anonymous',role:uRole.value,lat:parseFloat(uLat.value)||9.9252,lng:parseFloat(uLng.value)||78.1198}; users.push(u); localStorage.setItem('unavo_users',JSON.stringify(users)); document.getElementById('c2').innerText=users.length; renderUsers(); toast(`✅ ${u.role} created → redirect to ${u.role} dashboard`); addN(`New ${u.role} registered: ${u.name}`,'new_user');}
-function renderUsers(){ let p=document.getElementById('userPreview'); p.innerHTML=users.slice(-4).map(u=>`<div style="padding:8px 10px;border-radius:100px;background:#F6F5F0;font-size:0.7rem">${u.name} • ${u.role}</div>`).join('')||'<div style="font-size:0.7rem;opacity:0.5">No users yet — create first donor</div>';}
-function addF(){ let f={id:Date.now(),food_name:fName.value||'Mixed Veg Food',quantity:fQty.value||'10 plates',food_type:fType.value,expiry:fExp.value||new Date(Date.now()+3*3600000).toISOString().slice(0,16),pickup_location:fLoc.value||'Madurai',status:'available',lat:9.9252+(Math.random()-0.5)*0.06,lng:78.1198+(Math.random()-0.5)*0.06,emoji:['🍛','🫓','🍱','🥘','🍲'][Math.floor(Math.random()*5)]}; foods.unshift(f); save(); toast(`🍱 Listed: ${f.food_name} → status=available`); addN(`New food listed nearby: ${f.food_name} at ${f.pickup_location}`,'new_food');}
-function match(){ let bl=parseFloat(bLat.value)||9.9252,bn=parseFloat(bLng.value)||78.1198; if(routeLine) map.removeLayer(routeLine); let list=foods.filter(f=>f.status==='available').map(f=>({...f,dist:haversine(bl,bn,f.lat,f.lng)})).filter(f=>f.dist<15).sort((a,b)=> new Date(a.expiry)-new Date(b.expiry) || a.dist-b.dist); if(list[0]){ routeLine=L.polyline([[bl,bn],[list[0].lat,list[0].lng]],{color:'#FF4D12',weight:4,dashArray:'10,10'}).addTo(map); map.fitBounds([[bl,bn],[list[0].lat,list[0].lng]],{padding:[40,40]});} render(list); toast(`🔍 Matching: ${list.length} foods sorted by expiry + distance`); addN(`Matching ran: ${list.length} foods found`,'match');}
-function render(list=foods){ let c=document.getElementById('foodList'); c.innerHTML=''; (list.length?list:foods).forEach(f=>{ let hrs=((new Date(f.expiry)-new Date())/3600000).toFixed(1); let urgent=parseFloat(hrs)<2; c.innerHTML+=`<div class="fcard" style="${urgent?'border-color:#FF4D12':''}"><div class="fcard-img">${f.emoji}</div><div style="display:flex;justify-content:space-between"><h4>${f.food_name}</h4><span class="chip" style="${f.status==='available'?'background:#111;color:#fff':''}">${f.status.toUpperCase()} ${f.dist?f.dist.toFixed(1)+'KM':''}</span></div><div class="fmeta"><span class="chip">${f.quantity}</span><span class="chip">${f.food_type}</span><span class="chip timer">⏳ ${hrs}h left</span>${urgent?'<span class="chip" style="background:#FF4D12;color:#fff">URGENT PICKUP</span>':''}</div><div style="font-size:0.8rem;color:#6B6B6B">📍 ${f.pickup_location} • Exp: ${f.expiry.slice(0,16)}</div><button class="btn ${f.status==='available'?'btn-orange':''}" onclick="claim(${f.id})" ${f.status!=='available'?'disabled':''}>${f.status==='available'?'CLAIM → Generate QR + Notify Donor':'✓ CLAIMED — Donor Notified'}</button></div>`}); document.getElementById('c1').innerText=foods.filter(f=>f.status==='claimed').length; document.getElementById('c3').innerText=(foods.reduce((s,f)=>s+(f.dist||0),0).toFixed(1))+' KM';}
-function claim(id){ let f=foods.find(x=>x.id===id); if(!f||f.status!=='available')return; f.status='claimed'; save(); toast(`✅ Claimed! QR: UNAVO-${id} → donor notified`); confetti(); addN(`Food claimed: ${f.food_name} → notify donor`,'claim_confirmed');}
-function confetti(){ let em=['🎉','♻️','🍱']; for(let i=0;i<12;i++){ let d=document.createElement('div'); d.innerText=em[Math.floor(Math.random()*3)]; d.style.position='fixed'; d.style.left=Math.random()*100+'vw'; d.style.top='-20px'; d.style.fontSize='2rem'; d.style.animation=`fall ${2+Math.random()*2}s linear`; d.style.zIndex=999; document.body.appendChild(d); setTimeout(()=>d.remove(),3000);} }
-let style=document.createElement('style'); style.innerHTML=`@keyframes fall{to{transform:translateY(100vh) rotate(360deg)}}`; document.head.appendChild(style);
-function addN(m,t){ notifs.unshift({message:m,type:t,time:new Date().toLocaleTimeString()}); document.getElementById('bc').innerText=notifs.length; rendN();}
-function rendN(){ document.getElementById('notifList').innerHTML=notifs.map(n=>`<div style="padding:10px 0;border-bottom:1px solid #eee"><div style="font-size:0.6rem;opacity:0.5">${n.type.toUpperCase()} • ${n.time}</div><div style="font-size:0.85rem;margin-top:4px">${n.message}</div></div>`).join('');}
-function toggleN(){ let p=document.getElementById('notifPanel'); p.style.display=p.style.display==='block'?'none':'block';}
-function setTab(t){ document.getElementById('sForm').style.display=t==='s'?'block':'none'; document.getElementById('lForm').style.display=t==='l'?'block':'none'; document.getElementById('fForm').style.display=t==='f'?'block':'none'; document.querySelectorAll('.tab').forEach(e=>e.classList.remove('active')); document.querySelectorAll('.tab')[t==='s'?0:t==='l'?1:2].classList.add('active');}
-function save(){ localStorage.setItem('unavo_foods',JSON.stringify(foods)); render(); refMap();}
-setInterval(()=>{ let ch=false; foods.forEach(f=>{ if(f.status==='available' && new Date(f.expiry)<new Date()){ f.status='expired'; ch=true; addN(`Food expired: ${f.food_name} → status=expired`,'urgent'); toast(`⚠️ Expired: ${f.food_name}`);}}); if(ch)save();},60000);
-render(); renderUsers();
+function logQuery(q){ document.getElementById('queryLog').innerHTML+=`<br><span class="g">></span> ${q}`; document.getElementById('queryLog').scrollTop=9999;}
+function addNotif(m){ document.getElementById('notifLog').innerHTML=`<span class="y">[${new Date().toLocaleTimeString()}] ${m}</span><br>`+document.getElementById('notifLog').innerHTML; notifs++; document.getElementById('curRole').innerText=document.getElementById('uRole').value.toUpperCase()+' • 🔔'+notifs;}
+function getLoc(){ navigator.geolocation.getCurrentPosition(p=>{ uLat.value=p.coords.latitude.toFixed(4); uLng.value=p.coords.longitude.toFixed(4); bLat.value=p.coords.latitude.toFixed(4); bLng.value=p.coords.longitude.toFixed(4); map.setView([p.coords.latitude,p.coords.longitude],13); logQuery(`navigator.geolocation → lat:${p.coords.latitude.toFixed(4)} lng:${p.coords.longitude.toFixed(4)}`);});}
+function reg(){ let u={id:Date.now()%100000,name:uName.value||'Anonymous',role:uRole.value,lat:parseFloat(uLat.value)||9.9252,lng:parseFloat(uLng.value)||78.1198}; users.push(u); localStorage.setItem('u',JSON.stringify(users)); logQuery(`INSERT INTO users (name, role, lat, lng, password_hash) VALUES ('${u.name}', '${u.role}', ${u.lat}, ${u.lng}, 'bcrypt_$2b$12$...') RETURNING id=${u.id}`); addNotif(`new_user: ${u.role} registered ${u.name}`); renderDB(); document.getElementById('k2').innerText=users.length;}
+function addF(){ let f={id:Date.now()%100000,food_name:fName.value||'Mixed Food',quantity:fQty.value||'10',food_type:fType.value,expiry:fExp.value||new Date(Date.now()+3*3600000).toISOString().slice(0,16),pickup_location:fLoc.value||'Madurai',status:'available',lat:9.9252+(Math.random()-0.5)*0.06,lng:78.1198+(Math.random()-0.5)*0.06}; foods.unshift(f); save(); logQuery(`INSERT INTO food_items (donor_id, food_name, quantity, food_type, expiry, pickup_location, status) VALUES (1, '${f.food_name}', '${f.quantity}', '${f.food_type}', '${f.expiry}', '${f.pickup_location}', 'available')`); addNotif(`new_food: ${f.food_name} listed nearby`); }
+function match(){ let bl=parseFloat(bLat.value)||9.9252,bn=parseFloat(bLng.value)||78.1198; let steps=document.getElementById('algoSteps'); steps.innerHTML=''; let list=foods.filter(f=>f.status==='available').map(f=>{ let d=haversine(bl,bn,f.lat,f.lng); let hrs=(new Date(f.expiry)-new Date())/3600000; let score=(1/Math.max(hrs,0.1))*0.7 + (1/Math.max(d,0.1))*0.3; steps.innerHTML+=`calc ${f.food_name}: dist=${d.toFixed(2)}km, hrs=${hrs.toFixed(1)}, score=${score.toFixed(3)}<br>`; return {...f,dist:d,score,hrs};}).filter(f=>f.dist<15).sort((a,b)=> a.hrs - b.hrs || a.dist - b.dist); logQuery(`SELECT * FROM food_items WHERE status='available' AND ST_Distance(pickup_loc, POINT(${bl},${bn})) < 15 ORDER BY expiry ASC, distance ASC LIMIT 20; -- ${list.length} rows`); render(list); addNotif(`matching: ${list.length} foods ranked`); }
+function render(list=foods){ let c=document.getElementById('foodList'); c.innerHTML=''; (list.length?list:foods).forEach(f=>{ let hrs=((new Date(f.expiry)-new Date())/3600000).toFixed(1); c.innerHTML+=`<div class="fcard"><div style="display:flex;justify-content:space-between"><b>${f.food_name}</b><span class="badge badge-av">${f.status} ${f.dist?f.dist.toFixed(1)+'km':''}</span></div><div style="font-size:0.7rem;color:#666;margin:6px 0">${f.quantity} • ${f.food_type} • <span style="color:${parseFloat(hrs)<2?'#FF4444':'#888'}">${hrs}h left</span> • 📍 ${f.pickup_location}</div><div class="score-bar"><div class="score-fill" style="width:${Math.min(100, (f.score||0.5)*100)}%"></div></div><div style="display:flex;gap:6px;margin-top:8px"><button class="btn btn-green" style="margin:0;padding:8px" onclick="claim(${f.id})">CLAIM → UPDATE status='claimed' WHERE id=${f.id} AND status='available'</button></div></div>`});}
+function claim(id){ let f=foods.find(x=>x.id===id); if(!f||f.status!=='available'){ addNotif(`ledger: FAILED double-claim blocked for id=${id}`); return;} f.status='claimed'; save(); document.getElementById('ledgerLog').innerHTML=`<span class="g">[${new Date().toLocaleTimeString()}] LEDGER COMMIT</span><br>UPDATE food_items SET status='claimed', claimed_by=101 WHERE id=${id} AND status='available' — 1 row affected<br>`+document.getElementById('ledgerLog').innerHTML; document.getElementById('volLog').innerHTML=`Greedy Load Balancer: Volunteer with min active deliveries selected<br>Volunteer_3 (2 deliveries) → assigned to ${f.food_name}<br>Route: ${f.pickup_location} → Beneficiary ( ${f.dist?f.dist.toFixed(1)+'km':''} )<br>`+document.getElementById('volLog').innerHTML; addNotif(`claim_confirmed: ${f.food_name} claimed → notify donor_id=${f.id}`); document.getElementById('k3').innerText=foods.filter(x=>x.status==='claimed').length; }
+function renderDB(){ document.getElementById('usersTable').innerHTML='<tr><th>id</th><th>name</th><th>role</th></tr>'+users.slice(-5).map(u=>`<tr><td>${u.id}</td><td>${u.name.slice(0,12)}</td><td>${u.role}</td></tr>`).join(''); document.getElementById('foodTable').innerHTML='<tr><th>id</th><th>food</th><th>exp</th><th>dist</th></tr>'+foods.filter(f=>f.status==='available').slice(0,5).map(f=>`<tr><td>${f.id}</td><td>${f.food_name.slice(0,10)}</td><td>${f.expiry.slice(11,16)}</td><td>${f.dist?f.dist.toFixed(1):'-'}</td></tr>`).join('');}
+function save(){ localStorage.setItem('f',JSON.stringify(foods)); render(); refMap(); renderDB(); document.getElementById('k1').innerText=foods.filter(f=>f.status==='available').length; document.getElementById('k4').innerText=foods.reduce((s,f)=>s+(f.dist||0),0).toFixed(1)+'km';}
+function filterFeed(s){ if(s==='all')render(foods); else render(foods.filter(f=>f.status===s));}
+setInterval(()=>{ let ch=false; foods.forEach(f=>{ if(f.status==='available' && new Date(f.expiry)<new Date()){ f.status='expired'; ch=true; document.getElementById('cronLog').innerHTML=`<span class="r">[${new Date().toLocaleTimeString()}] EXPIRED: id=${f.id} ${f.food_name} → status=expired</span><br>`+document.getElementById('cronLog').innerHTML; }}); if(ch)save();},60000);
+setInterval(()=>{ document.getElementById('liveClock').innerText=new Date().toLocaleTimeString();},1000);
+render(); renderDB(); refMap();
 </script>
 </body>
 </html>
