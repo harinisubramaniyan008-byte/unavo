@@ -1,129 +1,88 @@
 "use client"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-export default function UnaFoodShare() {
-  const [page, setPage] = useState('home') // home, login, register, dashboard, list, find, notify
+export default function Page() {
+  const [page, setPage] = useState('home')
+  const [foods, setFoods] = useState([{id:1, name:'Veg Meals', qty:'30 plates', expiry:'Today 9PM', dist:'2.1km', loc:'Mattuthavani', status:'available'}])
+  
+  // Haversine Formula - No API needed
+  const getDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371;
+    const dLat = (lat2-lat1)*Math.PI/180
+    const dLon = (lon2-lon1)*Math.PI/180
+    const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2
+    return (R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))).toFixed(1) + 'km'
+  }
 
-  return (
-    <div style={{ minHeight: '100vh', background: 'black', color: 'white', fontFamily: 'sans-serif' }}>
-      
-      {/* ===== HOME PAGE ===== */}
-      {page === 'home' && (
-        <div style={{ padding: '40px' }}>
-          <h1 style={{ fontSize: '50px', fontWeight: 'bold' }}>Don't Waste <span style={{ color: '#22c55e' }}>Food,</span> Share It.</h1>
-          <p style={{ color: '#9ca3af', marginTop: '10px' }}>Unavo connects donors, NGOs, volunteers & beneficiaries in one role-based network.</p>
-          <button onClick={() => setPage('login')} style={{ marginTop: '20px', background: '#22c55e', padding: '12px 25px', borderRadius: '30px', border: 'none', fontWeight: 'bold' }}>Start Sharing →</button>
-          
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '15px', marginTop: '40px' }}>
-            <div style={{ background: '#18181b', padding: '20px', borderRadius: '12px' }}><b>1. Registration</b><p style={{ color: '#9ca3af', fontSize: '13px' }}>Role based signup</p></div>
-            <div style={{ background: '#18181b', padding: '20px', borderRadius: '12px' }}><b>2. Food Listing</b><p style={{ color: '#9ca3af', fontSize: '13px' }}>Donor adds food</p></div>
-            <div style={{ background: '#18181b', padding: '20px', borderRadius: '12px' }}><b>3. Matching (No ML)</b><p style={{ color: '#9ca3af', fontSize: '13px' }}>Haversine + Expiry sort</p></div>
-            <div style={{ background: '#18181b', padding: '20px', borderRadius: '12px' }}><b>4. Location</b><p style={{ color: '#9ca3af', fontSize: '13px' }}>Leaflet Map Live</p></div>
-            <div style={{ background: '#18181b', padding: '20px', borderRadius: '12px' }}><b>5. Notification</b><p style={{ color: '#9ca3af', fontSize: '13px' }}>Alerts</p></div>
-          </div>
+  const claimFood = (id) => {
+    setFoods(foods.map(f => f.id===id ? {...f, status:'claimed'} : f))
+    alert('Claimed! Notification sent to donor - Table: notifications inserted')
+  }
+
+  if(page==='home') return (
+    <div style={{background:'black', color:'white', padding:'40px', minHeight:'100vh'}}>
+      <h1 style={{fontSize:'48px'}}>Don't Waste <span style={{color:'#22c55e'}}>Food,</span> Share It.</h1>
+      <button onClick={()=>setPage('login')} style={{background:'#22c55e', padding:'12px 25px', borderRadius:'30px', marginTop:'20px', border:'none', fontWeight:'bold'}}>Start Sharing →</button>
+      <div style={{marginTop:'30px', color:'#9ca3af'}}><p>1.Registration (role field) → 2.Food Listing (status=available) → 3.Matching (Filter + Haversine + Sort) → 4.Location (lat/long) → 5.Notification (table insert)</p></div>
+    </div>
+  )
+
+  if(page==='login') return (
+    <div style={{background:'black', minHeight:'100vh', display:'flex', justifyContent:'center', alignItems:'center', color:'white'}}>
+      <div style={{background:'#18181b', padding:'30px', borderRadius:'15px', width:'360px'}}>
+        <h2>Registration & Profile Module</h2><p style={{color:'#9ca3af', fontSize:'12px'}}>Table: users with role field</p>
+        <input placeholder="Name" style={{width:'100%', padding:'10px', marginTop:'10px', background:'black', border:'1px solid #333', borderRadius:'8px', color:'white'}}/>
+        <select style={{width:'100%', padding:'10px', marginTop:'10px', background:'black', border:'1px solid #333', borderRadius:'8px', color:'white'}}><option>donor</option><option>NGO</option><option>volunteer</option><option>beneficiary</option></select>
+        <button onClick={()=>setPage('dashboard')} style={{width:'100%', background:'#22c55e', padding:'10px', marginTop:'15px', borderRadius:'8px', border:'none'}}>Signup → Hash Password → Insert DB</button>
+      </div>
+    </div>
+  )
+
+  if(page==='dashboard') return (
+    <div style={{display:'flex', minHeight:'100vh', background:'black', color:'white'}}>
+      <div style={{width:'250px', background:'#18181b', padding:'20px'}}>
+        <b>UNA • FoodShare</b>
+        <p onClick={()=>setPage('list')} style={{background:'black', padding:'10px', borderRadius:'8px', marginTop:'15px', cursor:'pointer'}}>2. Food Listing Module</p>
+        <p onClick={()=>setPage('find')} style={{background:'black', padding:'10px', borderRadius:'8px', marginTop:'10px', cursor:'pointer'}}>3. Matching + 4. Location</p>
+        <p onClick={()=>setPage('notify')} style={{background:'black', padding:'10px', borderRadius:'8px', marginTop:'10px', cursor:'pointer'}}>5. Notification Module</p>
+      </div>
+      <div style={{padding:'30px'}}><h2>Dashboard</h2><p style={{color:'#9ca3af'}}>Each button = separate module like Traffic System</p></div>
+    </div>
+  )
+
+  if(page==='list') return (
+    <div style={{background:'black', minHeight:'100vh', color:'white', padding:'30px'}}>
+      <button onClick={()=>setPage('dashboard')} style={{color:'#22c55e', background:'none', border:'none'}}>← Back</button>
+      <h2>Food Listing Module</h2><p style={{color:'#9ca3af'}}>Table: food_items status=available, Cron checks expiry</p>
+      <div style={{background:'#18181b', padding:'20px', width:'380px', borderRadius:'12px', marginTop:'15px'}}>
+        <input placeholder="Veg Meals - 30 plates" style={{width:'100%', padding:'10px', background:'black', border:'1px solid #333', borderRadius:'8px', color:'white'}}/>
+        <input placeholder="Expiry: 2026-10-06 21:00" style={{width:'100%', padding:'10px', background:'black', border:'1px solid #333', borderRadius:'8px', color:'white', marginTop:'10px'}}/>
+        <button onClick={()=>{setPage('find'); alert('Inserted into food_items table')}} style={{width:'100%', background:'#22c55e', padding:'10px', marginTop:'15px', borderRadius:'8px', border:'none'}}>List Food</button>
+      </div>
+    </div>
+  )
+
+  if(page==='find') return (
+    <div style={{background:'black', minHeight:'100vh', color:'white', padding:'30px'}}>
+      <button onClick={()=>setPage('dashboard')} style={{color:'#22c55e', background:'none', border:'none'}}>← Back</button>
+      <h2>Matching Module (No ML) + Location Module</h2>
+      <p style={{color:'#9ca3af'}}>Step1: status=available | Step2: Haversine distance {getDistance(9.9252,78.1198,9.93,78.12)} | Step3: Sort by expiry+distance | Step4: Leaflet map</p>
+      {foods.filter(f=>f.status==='available').map(f=>(
+        <div key={f.id} style={{background:'#18181b', padding:'15px', borderRadius:'10px', marginTop:'10px', display:'flex', justifyContent:'space-between'}}>
+          <span>{f.name} - {f.dist} - {f.loc}</span><button onClick={()=>claimFood(f.id)} style={{background:'#22c55e', border:'none', padding:'5px 15px', borderRadius:'15px'}}>Claim</button>
         </div>
-      )}
+      ))}
+    </div>
+  )
 
-      {/* ===== LOGIN MODULE ===== */}
-      {page === 'login' && (
-        <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ background: '#18181b', padding: '30px', borderRadius: '15px', width: '380px' }}>
-            <h2 style={{ fontSize: '24px' }}>Module 1: Login</h2>
-            <input placeholder="Email" style={{ width: '100%', padding: '12px', marginTop: '15px', background: 'black', border: '1px solid #333', borderRadius: '8px', color: 'white' }} />
-            <input placeholder="Password" type="password" style={{ width: '100%', padding: '12px', marginTop: '10px', background: 'black', border: '1px solid #333', borderRadius: '8px', color: 'white' }} />
-            <button onClick={() => setPage('dashboard')} style={{ width: '100%', marginTop: '15px', background: '#22c55e', padding: '12px', borderRadius: '8px', border: 'none', fontWeight: 'bold' }}>Login → Dashboard</button>
-            <p onClick={() => setPage('register')} style={{ marginTop: '12px', color: '#22c55e', cursor: 'pointer' }}>Create Account</p>
-            <p onClick={() => setPage('home')} style={{ marginTop: '8px', color: '#666', cursor: 'pointer' }}>← Back to Home</p>
-          </div>
-        </div>
-      )}
-
-      {/* ===== REGISTER MODULE ===== */}
-      {page === 'register' && (
-        <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ background: '#18181b', padding: '30px', borderRadius: '15px', width: '400px' }}>
-            <h2>Module 1: Registration & Profile (Input Module)</h2>
-            <input placeholder="Name" style={{ width: '100%', padding: '12px', marginTop: '12px', background: 'black', border: '1px solid #333', borderRadius: '8px', color: 'white' }} />
-            <select style={{ width: '100%', padding: '12px', marginTop: '10px', background: 'black', border: '1px solid #333', borderRadius: '8px', color: 'white' }}>
-              <option>Donor - Restaurant</option><option>NGO</option><option>Volunteer</option><option>Beneficiary</option>
-            </select>
-            <button onClick={() => setPage('dashboard')} style={{ width: '100%', marginTop: '15px', background: '#22c55e', padding: '12px', borderRadius: '8px', border: 'none', fontWeight: 'bold' }}>Use My Current Location & Register</button>
-            <p onClick={() => setPage('login')} style={{ marginTop: '12px', color: '#666', cursor: 'pointer' }}>← Back to Login</p>
-          </div>
-        </div>
-      )}
-
-      {/* ===== DASHBOARD ===== */}
-      {page === 'dashboard' && (
-        <div style={{ display: 'flex', minHeight: '100vh' }}>
-          <div style={{ width: '260px', background: '#18181b', padding: '20px' }}>
-            <h2 style={{ fontWeight: 'bold' }}>UNA • FoodShare</h2>
-            <div style={{ marginTop: '20px' }}>
-              <button onClick={() => setPage('register')} style={{ width: '100%', textAlign: 'left', padding: '10px', background: 'black', borderRadius: '8px', border: 'none', color: 'white', marginBottom: '8px' }}>1. Registration Module</button>
-              <button onClick={() => setPage('list')} style={{ width: '100%', textAlign: 'left', padding: '10px', background: 'black', borderRadius: '8px', border: 'none', color: 'white', marginBottom: '8px' }}>2. Food Listing Module</button>
-              <button onClick={() => setPage('find')} style={{ width: '100%', textAlign: 'left', padding: '10px', background: 'black', borderRadius: '8px', border: 'none', color: 'white', marginBottom: '8px' }}>3. Matching (No ML)</button>
-              <button onClick={() => setPage('find')} style={{ width: '100%', textAlign: 'left', padding: '10px', background: 'black', borderRadius: '8px', border: 'none', color: 'white', marginBottom: '8px' }}>4. Location & Routing</button>
-              <button onClick={() => setPage('notify')} style={{ width: '100%', textAlign: 'left', padding: '10px', background: 'black', borderRadius: '8px', border: 'none', color: 'white', marginBottom: '8px' }}>5. Notification</button>
-            </div>
-            <button onClick={() => setPage('home')} style={{ marginTop: '30px', color: '#666', background: 'none', border: 'none' }}>Logout</button>
-          </div>
-          <div style={{ flex: 1, padding: '30px' }}>
-            <h1 style={{ fontSize: '28px' }}>Dashboard - Like Traffic System</h1>
-            <p style={{ color: '#9ca3af' }}>Left side click pannu, thani thani module varum. Ithuthaan PPT la 6 slide ah kaata pora.</p>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginTop: '20px' }}>
-              <div onClick={() => setPage('list')} style={{ background: '#18181b', padding: '20px', borderRadius: '12px', cursor: 'pointer' }}><b>Input / Food Listing</b><p style={{ color: '#9ca3af' }}>Add Veg Meals 30 plates</p></div>
-              <div onClick={() => setPage('find')} style={{ background: '#18181b', padding: '20px', borderRadius: '12px', cursor: 'pointer' }}><b>Matching Output</b><p style={{ color: '#9ca3af' }}>Live Feed + Map</p></div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ===== LIST MODULE ===== */}
-      {page === 'list' && (
-        <div style={{ padding: '30px' }}>
-          <button onClick={() => setPage('dashboard')} style={{ background: 'none', border: 'none', color: '#22c55e' }}>← Back to Dashboard</button>
-          <h2 style={{ fontSize: '24px', marginTop: '15px' }}>Module 2: Food Listing / Traffic Data Module</h2>
-          <div style={{ background: '#18181b', padding: '20px', borderRadius: '12px', width: '400px', marginTop: '20px' }}>
-            <input placeholder="Food Name: Veg Meals" style={{ width: '100%', padding: '10px', background: 'black', borderRadius: '8px', border: '1px solid #333', color: 'white', marginBottom: '10px' }} />
-            <input placeholder="Quantity: 30 plates" style={{ width: '100%', padding: '10px', background: 'black', borderRadius: '8px', border: '1px solid #333', color: 'white', marginBottom: '10px' }} />
-            <input placeholder="Expiry: 2 hours" style={{ width: '100%', padding: '10px', background: 'black', borderRadius: '8px', border: '1px solid #333', color: 'white', marginBottom: '10px' }} />
-            <button onClick={() => setPage('find')} style={{ width: '100%', background: '#22c55e', padding: '10px', borderRadius: '8px', border: 'none', fontWeight: 'bold' }}>Create → Go to Matching Module</button>
-          </div>
-        </div>
-      )}
-
-      {/* ===== FIND + MAP MODULE ===== */}
-      {page === 'find' && (
-        <div style={{ padding: '30px' }}>
-          <button onClick={() => setPage('dashboard')} style={{ background: 'none', border: 'none', color: '#22c55e' }}>← Back to Dashboard</button>
-          <h2 style={{ fontSize: '24px', marginTop: '15px' }}>Module 3 & 4: Matching + Location / Traffic Analysis</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginTop: '20px' }}>
-            <div style={{ background: '#18181b', padding: '20px', borderRadius: '12px' }}>
-              <h3>Live Food Feed - Matching Output (No ML Logic)</h3>
-              <p style={{ fontSize: '12px', color: '#9ca3af' }}>Filter available + Not expired + Haversine Distance + Sort by expiry</p>
-              <div style={{ marginTop: '12px', background: 'black', padding: '12px', borderRadius: '8px' }}>Veg Meals - 30 plates - 2.1km - Mattuthavani - <span style={{ color: '#22c55e' }}>Claimed</span></div>
-              <div style={{ marginTop: '10px', background: 'black', padding: '12px', borderRadius: '8px' }}>Parotta & Kuruma - 0.8km - Simmakkal - <span style={{ color: '#22c55e' }}>Claimed</span></div>
-            </div>
-            <div style={{ background: '#18181b', padding: '20px', borderRadius: '12px' }}>
-              <h3>Live Map - Leaflet OpenStreetMap</h3>
-              <div style={{ marginTop: '15px', height: '180px', background: 'black', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666' }}>Madurai Map - Donor Pins + Beneficiary Pins - Distance via Haversine</div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ===== NOTIFY MODULE ===== */}
-      {page === 'notify' && (
-        <div style={{ padding: '30px' }}>
-          <button onClick={() => setPage('dashboard')} style={{ background: 'none', border: 'none', color: '#22c55e' }}>← Back to Dashboard</button>
-          <h2 style={{ fontSize: '24px', marginTop: '15px' }}>Module 5: Notification / Output & Monitoring</h2>
-          <div style={{ background: '#18181b', padding: '20px', borderRadius: '12px', width: '400px', marginTop: '20px' }}>
-            <div style={{ background: 'black', padding: '10px', borderRadius: '8px', marginBottom: '10px' }}>🔔 New food near you - Veg Meals 2.1km - Unread</div>
-            <div style={{ background: 'black', padding: '10px', borderRadius: '8px', marginBottom: '10px' }}>✅ Your food claimed by NGO - Read</div>
-            <div style={{ background: 'black', padding: '10px', borderRadius: '8px' }}>⚠️ Food expired - Removed</div>
-          </div>
-        </div>
-      )}
+  if(page==='notify') return (
+    <div style={{background:'black', minHeight:'100vh', color:'white', padding:'30px'}}>
+      <button onClick={()=>setPage('dashboard')} style={{color:'#22c55e', background:'none', border:'none'}}>← Back</button>
+      <h2>Notification Module</h2><p style={{color:'#9ca3af'}}>Table: notifications | Polling every 10sec</p>
+      <div style={{background:'#18181b', padding:'15px', borderRadius:'10px', width:'380px', marginTop:'15px'}}>
+        <div style={{background:'black', padding:'10px', borderRadius:'8px'}}>🔔 New food 2.1km away - unread</div>
+        <div style={{background:'black', padding:'10px', borderRadius:'8px', marginTop:'10px'}}>✅ Food claimed - donor notified - read</div>
+      </div>
     </div>
   )
 }
