@@ -1,2 +1,12 @@
-<!DOCTYPE html><html><head><style>body{background:black;color:white;padding:30px;font-family:sans-serif}.box{background:#18181b;padding:20px;border-radius:12px;width:380px}input{width:100%;padding:10px;background:black;border:1px solid #333;border-radius:8px;color:white;margin-bottom:10px}.btn{width:100%;background:#22c55e;padding:10px;border-radius:8px;border:none;font-weight:bold}</style></head>
-<body><a href="dashboard.html" style="color:#22c55e">← Dashboard</a><h2>2. Food Listing Module</h2><div class="box"><input placeholder="Veg Meals - 30 plates"><a href="find.html"><button class="btn">Create → Matching</button></a></div></body></html>
+<!DOCTYPE html><html><head><script src="https://cdn.tailwindcss.com"></script></head>
+<body class="bg-black text-white p-6"><a href="dashboard.html" class="text-lime-400">← Dashboard</a>
+<h1 class="text-3xl font-bold mt-3">2. Food Listing Module</h1><p class="text-zinc-500 text-sm">Backend: INSERT INTO foods (name, qty, expiry, lat, lng, status='available')</p>
+<div class="max-w-[500px] bg-[#18181b] p-6 rounded-2xl mt-6 border border-white/10">
+<label class="text-xs text-zinc-400">Food Photo + Details</label>
+<input id="fname" placeholder="Ex: Sambar Sadam - 60 plates" class="w-full mt-2 p-3 bg-black border border-zinc-800 rounded-lg">
+<div class="grid grid-cols-2 gap-3 mt-3"><input id="qty" type="number" placeholder="Quantity" class="p-3 bg-black border border-zinc-800 rounded-lg">
+<input id="expiry" type="time" class="p-3 bg-black border border-zinc-800 rounded-lg"></div>
+<input id="loc" placeholder="📍 Mattuthavani, Madurai - Auto Captured" value="Mattuthavani - 9.9252,78.1198" class="w-full mt-3 p-3 bg-black border border-zinc-800 rounded-lg text-lime-400">
+<button onclick="saveFood()" class="w-full bg-lime-400 text-black font-bold p-3 rounded-xl mt-4">Create Food → Trigger Matching Engine</button>
+<p id="status" class="text-xs text-center mt-3 text-zinc-500"></p></div>
+<script>function saveFood(){let n=document.getElementById('fname').value;localStorage.setItem('latestFood',n);document.getElementById('status').innerText='✅ Saved! Status=available | Expiry Timer Started | Location Locked';setTimeout(()=>{window.location='find.html'},1200)}</script></body></html>
