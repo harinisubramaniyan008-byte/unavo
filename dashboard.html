@@ -1,2 +1,17 @@
-<!DOCTYPE html><html><head><style>body{background:black;color:white;display:flex;min-height:100vh;margin:0;font-family:sans-serif}.sidebar{width:260px;background:#18181b;padding:20px}a{color:white;text-decoration:none;display:block;padding:10px;background:black;border-radius:8px;margin-top:10px}</style></head>
-<body><div class="sidebar"><h2>UNA • FoodShare</h2><a href="list.html">2. Food Listing Module</a><a href="find.html">3 & 4. Matching + Map</a><a href="notify.html">5. Notification Module</a><a href="index.html" style="color:#666">← Home</a></div><div style="padding:30px"><h1>Dashboard</h1><p style="color:#9ca3af">Click left side to go to next module</p></div></body></html>
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width"><script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>body{font-family:'Space Grotesk';background:#080808}</style></head>
+<body class="text-white flex min-h-screen">
+<div class="w-[300px] bg-[#111] p-6 border-r border-white/10">
+<h1 class="text-2xl font-bold">UNA • FoodShare</h1><p class="text-xs text-zinc-500 mt-1">Madurai Food Network • Live</p>
+<div class="mt-8 space-y-3">
+<a href="list.html" class="block bg-zinc-900 hover:bg-white hover:text-black p-4 rounded-xl transition">📦 <b>Food Listing</b><p class="text-xs opacity-60">Create + Expiry Logic</p></a>
+<a href="find.html" class="block bg-zinc-900 hover:bg-lime-400 hover:text-black p-4 rounded-xl transition border border-lime-400/20">🗺️ <b>Matching + Live Map</b><p class="text-xs opacity-60">Haversine • Filter • Sort</p></a>
+<a href="notify.html" class="block bg-zinc-900 hover:bg-white hover:text-black p-4 rounded-xl transition">🔔 <b>Notifications</b><p class="text-xs opacity-60">Claim • Alert • History</p></a>
+</div><div class="mt-10 p-4 bg-lime-400 text-black rounded-xl"><b id="liveCount">3 Foods Live Now</b><p class="text-xs">in Mattuthavani 5km radius</p></div>
+<a href="index.html" class="mt-6 inline-block text-zinc-500">← Home</a></div>
+<div class="flex-1 p-10"><h1 class="text-5xl font-bold">Good Evening, NGO 👋</h1><p class="text-zinc-400 mt-2">Here is your impact today</p>
+<div class="grid grid-cols-3 gap-5 mt-8"><div class="bg-[#18181b] p-6 rounded-2xl border border-white/10"><p class="text-zinc-500 text-sm">Meals Saved</p><h2 class="text-4xl mt-2 text-lime-400">1,240</h2></div>
+<div class="bg-[#18181b] p-6 rounded-2xl border border-white/10"><p class="text-zinc-500 text-sm">CO2 Saved</p><h2 class="text-4xl mt-2">320kg</h2></div>
+<div class="bg-[#18181b] p-6 rounded-2xl border border-white/10"><p class="text-zinc-500 text-sm">Active Donors</p><h2 class="text-4xl mt-2">18</h2></div></div>
+<div class="mt-8 bg-gradient-to-br from-zinc-900 to-black p-6 rounded-2xl border border-white/10"><h3>⚙️ Backend Process Flow (For PPT)</h3><p class="text-sm text-zinc-400 mt-2 font-mono">1. Registration (role-based) → 2. Listing (status=available) → 3. Matching: filter(available) → Haversine(lat1,lon1,lat2,lon2) → sort(expiry ASC) → 4. Location: lat/lng capture → 5. Notification: DB insert</p></div></div></body></html>
