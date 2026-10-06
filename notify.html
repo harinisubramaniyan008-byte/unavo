@@ -1,2 +1,11 @@
-<!DOCTYPE html><html><head><style>body{background:black;color:white;padding:30px;font-family:sans-serif}.box{background:#18181b;padding:20px;border-radius:12px;width:400px}.msg{background:black;padding:10px;border-radius:8px;margin-top:10px}</style></head>
-<body><a href="dashboard.html" style="color:#22c55e">← Dashboard</a><h2>5. Notification Module</h2><div class="box"><div class="msg">🔔 New food 2.1km away - Unread</div><div class="msg">✅ Food claimed - Donor notified</div><div style="margin-top:20px"><a href="index.html" style="background:#22c55e;color:black;padding:10px 20px;border-radius:20px;text-decoration:none">Finish → Home</a></div></div></body></html>
+<!DOCTYPE html><html><head><script src="https://cdn.tailwindcss.com"></script>
+<style>.shake{animation:shake 0.5s infinite} @keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
+.confetti{animation:confetti 2s ease-out forwards} @keyframes confetti{0%{transform:translateY(-100px) rotate(0)}100%{transform:translateY(400px) rotate(720deg);opacity:0}}</style></head>
+<body class="bg-black text-white p-6 overflow-hidden"><a href="dashboard.html" class="text-lime-400">← Dashboard</a>
+<h1 class="text-3xl font-bold mt-3 flex gap-3"><span class="shake">🔔</span> Notifications - LIVE</h1>
+<div class="mt-6 space-y-3 max-w-[600px]">
+<div class="bg-lime-400 text-black p-5 rounded-2xl relative"><div class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full animate-ping">NEW</div><b>🎉 Food Claimed Successfully!</b><p class="text-sm mt-1">Donor Amma Mess notified. Pickup: Mattuthavani Bus Stand - 2.1km</p><p class="text-xs mt-2">📞 +91 98765 43210 • 🕒 Pickup before 8PM</p></div>
+<div class="bg-[#18181b] p-4 rounded-2xl border border-lime-400/30">🟢 <b>Live Tracking:</b> Volunteer Ramesh is 500m away to pickup</div>
+</div>
+<div class="fixed top-0 left-10 text-2xl confetti">🎉</div><div class="fixed top-0 left-40 text-2xl confetti" style="animation-delay:0.3s">🍛</div><div class="fixed top-0 left-80 text-2xl confetti" style="animation-delay:0.6s">✨</div>
+</body></html>
