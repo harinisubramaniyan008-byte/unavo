@@ -1,178 +1,129 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Unavo - FoodShare | Zero Waste Network</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family: 'Inter', -apple-system, sans-serif}
-:root{--green:#16a34a;--dark:#0a0f0a;--card:#111a11;--border:#1f2f1f}
-body{background:var(--dark);color:#e5f5e5;overflow-x:hidden}
-nav{display:flex;justify-content:space-between;align-items:center;padding:18px 5%;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(10,15,10,0.9);backdrop-filter:blur(10px);z-index:100}
-.logo{font-size:1.8rem;font-weight:900;letter-spacing:-1px} .logo span{color:var(--green)}
-.nav-btns{display:flex;gap:12px;align-items:center}
-.bell{position:relative;cursor:pointer;font-size:1.4rem} .bell-count{position:absolute;top:-6px;right:-8px;background:#ef4444;color:white;font-size:0.6rem;padding:2px 6px;border-radius:10px}
-.btn{padding:10px 20px;border-radius:30px;border:none;font-weight:600;cursor:pointer;transition:.2s}
-.btn-green{background:var(--green);color:white} .btn-outline{background:transparent;border:1px solid var(--border);color:#a3b5a3}
-.hero{padding:80px 5% 40px;display:grid;grid-template-columns:1.2fr 0.8fr;gap:40px;align-items:center}
-.hero h1{font-size:3.8rem;line-height:0.95;letter-spacing:-2px;margin-bottom:16px} .hero h1 i{color:var(--green);font-style:normal}
-.hero p{color:#8aa08a;font-size:1.1rem;line-height:1.6;margin-bottom:24px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:24px}
-.grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;padding:0 5% 30px}
-.mod-card{padding:20px;border-radius:20px;background:linear-gradient(145deg,#111a11,#0f1a0f);border:1px solid var(--border)}
-.mod-card h3{font-size:0.9rem;margin-bottom:8px} .mod-card p{font-size:0.75rem;color:#7a8a7a;line-height:1.5}
-.main{display:grid;grid-template-columns:350px 1fr;gap:20px;padding:20px 5%}
-.form-group{margin-bottom:14px} .form-group label{font-size:0.75rem;color:#8aa08a;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px}
-input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;background:#0d140d;border:1px solid var(--border);color:white;outline:none}
-input:focus,select:focus{border-color:var(--green)}
-.tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap} .tab{padding:8px 14px;border-radius:20px;font-size:0.8rem;cursor:pointer;border:1px solid var(--border)} .tab.active{background:var(--green);border-color:var(--green);color:white}
-.food-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.food-item{padding:16px;border-radius:16px;background:#0d140d;border:1px solid var(--border);position:relative}
-.status{position:absolute;top:12px;right:12px;font-size:0.65rem;padding:4px 8px;border-radius:20px} .available{background:#16a34a22;color:#4ade80;border:1px solid #16a34a44} .claimed{background:#eab30822;color:#facc15} .expired{background:#ef444422;color:#f87171}
-#map{height:380px;border-radius:20px;border:1px solid var(--border)}
-.notif-panel{position:fixed;right:20px;top:70px;width:340px;background:#111a11;border:1px solid var(--border);border-radius:20px;padding:16px;z-index:200;display:none;max-height:70vh;overflow-y:auto}
-.notif-item{padding:10px;border-bottom:1px solid #1a2a1a;font-size:0.85rem} .notif-item b{color:var(--green)}
-@media(max-width:900px){.hero,.main,.grid5{grid-template-columns:1fr} .main{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<nav>
-<div class="logo">UNA<span>VO</span> • FoodShare</div>
-<div class="nav-btns">
-<div class="bell" onclick="toggleNotif()">🔔<span class="bell-count" id="bellCount">0</span></div>
-<button class="btn btn-outline" onclick="switchRole()">Switch Role: <span id="curRole">donor</span></button>
-</div>
-</nav>
+"use client"
+import { useState } from 'react'
 
-<div class="hero">
-<div>
-<div style="display:inline-block;border:1px solid var(--border);padding:6px 12px;border-radius:20px;font-size:0.7rem;margin-bottom:16px">♻️ REGISTRATION • LISTING • MATCHING • LOCATION • NOTIFICATION</div>
-<h1>Don't Waste <i>Food,</i> Share It.</h1>
-<p><b>Unavo</b> connects donors, NGOs, volunteers & beneficiaries in one role-based network. All 5 core modules working live - no ML, just pure logic.</p>
-<div style="display:flex;gap:12px"><button class="btn btn-green" onclick="document.getElementById('reg').scrollIntoView()">Start Sharing →</button><button class="btn btn-outline">How Matching Works</button></div>
-</div>
-<div class="card"><div id="map"></div><p style="margin-top:12px;font-size:0.75rem;color:#7a8a7a">📍 Live donor & beneficiary pins • Haversine distance • OpenStreetMap Leaflet</p></div>
-</div>
+export default function UnaFoodShare() {
+  const [page, setPage] = useState('home') // home, login, register, dashboard, list, find, notify
 
-<div class="grid5">
-<div class="mod-card"><h3>1. Registration & Profile</h3><p>One table with role field: donor, NGO, volunteer, beneficiary. Name, phone, email, address, lat/long, hashed password. Redirect based on role.</p></div>
-<div class="mod-card"><h3>2. Food Listing</h3><p>Table: donor_id, food_name, quantity, veg/non-veg, expiry, pickup_location, status. Cron flips available → expired after time.</p></div>
-<div class="mod-card"><h3>3. Matching (No ML)</h3><p>Filter available → distance via Haversine / pincode → Sort by soonest expiry + shortest distance → Claim → status = claimed.</p></div>
-<div class="mod-card"><h3>4. Location & Routing</h3><p>lat/long via browser API or Nominatim. Haversine formula for distance. Map shows donor/beneficiary pins.</p></div>
-<div class="mod-card"><h3>5. Notification</h3><p>Table: user_id, message, type, read/unread. Triggers: new food nearby, claimed, expiry 2hr. Polling bell icon.</p></div>
-</div>
+  return (
+    <div style={{ minHeight: '100vh', background: 'black', color: 'white', fontFamily: 'sans-serif' }}>
+      
+      {/* ===== HOME PAGE ===== */}
+      {page === 'home' && (
+        <div style={{ padding: '40px' }}>
+          <h1 style={{ fontSize: '50px', fontWeight: 'bold' }}>Don't Waste <span style={{ color: '#22c55e' }}>Food,</span> Share It.</h1>
+          <p style={{ color: '#9ca3af', marginTop: '10px' }}>Unavo connects donors, NGOs, volunteers & beneficiaries in one role-based network.</p>
+          <button onClick={() => setPage('login')} style={{ marginTop: '20px', background: '#22c55e', padding: '12px 25px', borderRadius: '30px', border: 'none', fontWeight: 'bold' }}>Start Sharing →</button>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '15px', marginTop: '40px' }}>
+            <div style={{ background: '#18181b', padding: '20px', borderRadius: '12px' }}><b>1. Registration</b><p style={{ color: '#9ca3af', fontSize: '13px' }}>Role based signup</p></div>
+            <div style={{ background: '#18181b', padding: '20px', borderRadius: '12px' }}><b>2. Food Listing</b><p style={{ color: '#9ca3af', fontSize: '13px' }}>Donor adds food</p></div>
+            <div style={{ background: '#18181b', padding: '20px', borderRadius: '12px' }}><b>3. Matching (No ML)</b><p style={{ color: '#9ca3af', fontSize: '13px' }}>Haversine + Expiry sort</p></div>
+            <div style={{ background: '#18181b', padding: '20px', borderRadius: '12px' }}><b>4. Location</b><p style={{ color: '#9ca3af', fontSize: '13px' }}>Leaflet Map Live</p></div>
+            <div style={{ background: '#18181b', padding: '20px', borderRadius: '12px' }}><b>5. Notification</b><p style={{ color: '#9ca3af', fontSize: '13px' }}>Alerts</p></div>
+          </div>
+        </div>
+      )}
 
-<div class="main">
-<div>
-<div class="card" id="reg">
-<div class="tabs"><div class="tab active" onclick="setTab('signup')">Signup</div><div class="tab" onclick="setTab('list')">List Food</div><div class="tab" onclick="setTab('match')">Find Food</div></div>
-<div id="signupForm">
-<div class="form-group"><label>Name / NGO Name</label><input id="uName" placeholder="e.g. Hotel Arya Bhavan"></div>
-<div class="form-group"><label>Role</label><select id="uRole"><option value="donor">Donor (Restaurant/Hotel)</option><option value="NGO">NGO</option><option value="volunteer">Volunteer</option><option value="beneficiary">Beneficiary</option></select></div>
-<div class="form-group"><label>Phone & Email</label><div style="display:flex;gap:8px"><input id="uPhone" placeholder="Phone"><input id="uEmail" placeholder="Email"></div></div>
-<div class="form-group"><label>Address & Location</label><input id="uAddr" placeholder="Madurai, Tamil Nadu"><div style="display:flex;gap:8px;margin-top:8px"><input id="uLat" placeholder="Lat 9.9252"><input id="uLng" placeholder="Long 78.1198"></div><button class="btn btn-outline" style="width:100%;margin-top:8px" onclick="getLoc()">📍 Use My Current Location</button></div>
-<button class="btn btn-green" style="width:100%" onclick="register()">Create Profile → Table Insert + Hash</button>
-</div>
-<div id="listForm" style="display:none">
-<div class="form-group"><label>Food Name</label><input id="fName" placeholder="Veg Biryani"></div>
-<div class="form-group"><label>Quantity & Type</label><div style="display:flex;gap:8px"><input id="fQty" placeholder="e.g. 20 plates"><select id="fType"><option>veg</option><option>non-veg</option><option>packaged</option></select></div></div>
-<div class="form-group"><label>Expiry Date/Time</label><input id="fExp" type="datetime-local"></div>
-<div class="form-group"><label>Pickup Location</label><input id="fLoc" placeholder="Donor location"></div>
-<button class="btn btn-green" style="width:100%" onclick="addFood()">List Food → status=available</button>
-</div>
-<div id="matchForm" style="display:none">
-<div class="form-group"><label>Your Location (Beneficiary)</label><input id="bLat" placeholder="Your Lat"><input id="bLng" placeholder="Your Lng"></div>
-<button class="btn btn-green" style="width:100%" onclick="runMatching()">Run Matching Logic → Filter + Sort</button>
-<div style="margin-top:12px;font-size:0.7rem;color:#7a8a7a">Logic: available → distance < 10km → sort expiry ASC, distance ASC</div>
-</div>
-</div>
-<div class="card" style="margin-top:16px"><h4 style="font-size:0.9rem;margin-bottom:10px">Build Order</h4><p style="font-size:0.75rem;color:#7a8a7a;line-height:1.6">Registration → Food Listing → Matching → Location → Notifications<br>Each depends on previous data. Suggested DB: users, food_items, notifications tables.</p></div>
-</div>
+      {/* ===== LOGIN MODULE ===== */}
+      {page === 'login' && (
+        <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ background: '#18181b', padding: '30px', borderRadius: '15px', width: '380px' }}>
+            <h2 style={{ fontSize: '24px' }}>Module 1: Login</h2>
+            <input placeholder="Email" style={{ width: '100%', padding: '12px', marginTop: '15px', background: 'black', border: '1px solid #333', borderRadius: '8px', color: 'white' }} />
+            <input placeholder="Password" type="password" style={{ width: '100%', padding: '12px', marginTop: '10px', background: 'black', border: '1px solid #333', borderRadius: '8px', color: 'white' }} />
+            <button onClick={() => setPage('dashboard')} style={{ width: '100%', marginTop: '15px', background: '#22c55e', padding: '12px', borderRadius: '8px', border: 'none', fontWeight: 'bold' }}>Login → Dashboard</button>
+            <p onClick={() => setPage('register')} style={{ marginTop: '12px', color: '#22c55e', cursor: 'pointer' }}>Create Account</p>
+            <p onClick={() => setPage('home')} style={{ marginTop: '8px', color: '#666', cursor: 'pointer' }}>← Back to Home</p>
+          </div>
+        </div>
+      )}
 
-<div>
-<div class="card"><h3 style="margin-bottom:14px">🍱 Live Food Feed - Matching Output</h3><div class="food-list" id="foodList"></div></div>
-</div>
-</div>
+      {/* ===== REGISTER MODULE ===== */}
+      {page === 'register' && (
+        <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ background: '#18181b', padding: '30px', borderRadius: '15px', width: '400px' }}>
+            <h2>Module 1: Registration & Profile (Input Module)</h2>
+            <input placeholder="Name" style={{ width: '100%', padding: '12px', marginTop: '12px', background: 'black', border: '1px solid #333', borderRadius: '8px', color: 'white' }} />
+            <select style={{ width: '100%', padding: '12px', marginTop: '10px', background: 'black', border: '1px solid #333', borderRadius: '8px', color: 'white' }}>
+              <option>Donor - Restaurant</option><option>NGO</option><option>Volunteer</option><option>Beneficiary</option>
+            </select>
+            <button onClick={() => setPage('dashboard')} style={{ width: '100%', marginTop: '15px', background: '#22c55e', padding: '12px', borderRadius: '8px', border: 'none', fontWeight: 'bold' }}>Use My Current Location & Register</button>
+            <p onClick={() => setPage('login')} style={{ marginTop: '12px', color: '#666', cursor: 'pointer' }}>← Back to Login</p>
+          </div>
+        </div>
+      )}
 
-<div class="notif-panel" id="notifPanel"><h4 style="margin-bottom:10px">Notifications (polling table)</h4><div id="notifList"></div></div>
+      {/* ===== DASHBOARD ===== */}
+      {page === 'dashboard' && (
+        <div style={{ display: 'flex', minHeight: '100vh' }}>
+          <div style={{ width: '260px', background: '#18181b', padding: '20px' }}>
+            <h2 style={{ fontWeight: 'bold' }}>UNA • FoodShare</h2>
+            <div style={{ marginTop: '20px' }}>
+              <button onClick={() => setPage('register')} style={{ width: '100%', textAlign: 'left', padding: '10px', background: 'black', borderRadius: '8px', border: 'none', color: 'white', marginBottom: '8px' }}>1. Registration Module</button>
+              <button onClick={() => setPage('list')} style={{ width: '100%', textAlign: 'left', padding: '10px', background: 'black', borderRadius: '8px', border: 'none', color: 'white', marginBottom: '8px' }}>2. Food Listing Module</button>
+              <button onClick={() => setPage('find')} style={{ width: '100%', textAlign: 'left', padding: '10px', background: 'black', borderRadius: '8px', border: 'none', color: 'white', marginBottom: '8px' }}>3. Matching (No ML)</button>
+              <button onClick={() => setPage('find')} style={{ width: '100%', textAlign: 'left', padding: '10px', background: 'black', borderRadius: '8px', border: 'none', color: 'white', marginBottom: '8px' }}>4. Location & Routing</button>
+              <button onClick={() => setPage('notify')} style={{ width: '100%', textAlign: 'left', padding: '10px', background: 'black', borderRadius: '8px', border: 'none', color: 'white', marginBottom: '8px' }}>5. Notification</button>
+            </div>
+            <button onClick={() => setPage('home')} style={{ marginTop: '30px', color: '#666', background: 'none', border: 'none' }}>Logout</button>
+          </div>
+          <div style={{ flex: 1, padding: '30px' }}>
+            <h1 style={{ fontSize: '28px' }}>Dashboard - Like Traffic System</h1>
+            <p style={{ color: '#9ca3af' }}>Left side click pannu, thani thani module varum. Ithuthaan PPT la 6 slide ah kaata pora.</p>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginTop: '20px' }}>
+              <div onClick={() => setPage('list')} style={{ background: '#18181b', padding: '20px', borderRadius: '12px', cursor: 'pointer' }}><b>Input / Food Listing</b><p style={{ color: '#9ca3af' }}>Add Veg Meals 30 plates</p></div>
+              <div onClick={() => setPage('find')} style={{ background: '#18181b', padding: '20px', borderRadius: '12px', cursor: 'pointer' }}><b>Matching Output</b><p style={{ color: '#9ca3af' }}>Live Feed + Map</p></div>
+            </div>
+          </div>
+        </div>
+      )}
 
-<script>
-let users=JSON.parse(localStorage.getItem('unavo_users')||'[]');
-let foods=JSON.parse(localStorage.getItem('unavo_foods')||'[{"id":1,"donor_id":1,"food_name":"Veg Meals - 30 plates","quantity":"30","food_type":"veg","expiry":"2026-09-21T01:30","pickup_location":"Madurai Mattuthavani","status":"available","lat":9.9252,"lng":78.1198,"dist":2.1},{"id":2,"donor_id":1,"food_name":"Parotta & Kuruma","quantity":"15","food_type":"veg","expiry":"2026-09-21T00:00","pickup_location":"Madurai Simmakkal","status":"available","lat":9.92,"lng":78.11,"dist":0.8}]');
-let notifs=JSON.parse(localStorage.getItem('unavo_notifs')||'[]');
-let curRole='donor';
+      {/* ===== LIST MODULE ===== */}
+      {page === 'list' && (
+        <div style={{ padding: '30px' }}>
+          <button onClick={() => setPage('dashboard')} style={{ background: 'none', border: 'none', color: '#22c55e' }}>← Back to Dashboard</button>
+          <h2 style={{ fontSize: '24px', marginTop: '15px' }}>Module 2: Food Listing / Traffic Data Module</h2>
+          <div style={{ background: '#18181b', padding: '20px', borderRadius: '12px', width: '400px', marginTop: '20px' }}>
+            <input placeholder="Food Name: Veg Meals" style={{ width: '100%', padding: '10px', background: 'black', borderRadius: '8px', border: '1px solid #333', color: 'white', marginBottom: '10px' }} />
+            <input placeholder="Quantity: 30 plates" style={{ width: '100%', padding: '10px', background: 'black', borderRadius: '8px', border: '1px solid #333', color: 'white', marginBottom: '10px' }} />
+            <input placeholder="Expiry: 2 hours" style={{ width: '100%', padding: '10px', background: 'black', borderRadius: '8px', border: '1px solid #333', color: 'white', marginBottom: '10px' }} />
+            <button onClick={() => setPage('find')} style={{ width: '100%', background: '#22c55e', padding: '10px', borderRadius: '8px', border: 'none', fontWeight: 'bold' }}>Create → Go to Matching Module</button>
+          </div>
+        </div>
+      )}
 
-const map=L.map('map').setView([9.9252,78.1198],12);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-let markers=[];
-function refreshMap(){
- markers.forEach(m=>map.removeLayer(m)); markers=[];
- foods.filter(f=>f.status==='available').forEach(f=>{
-   let m=L.marker([f.lat,f.lng]).addTo(map).bindPopup(`<b>${f.food_name}</b><br>${f.pickup_location}<br>Exp: ${f.expiry}`);
-   markers.push(m);
- });
-}
-refreshMap();
+      {/* ===== FIND + MAP MODULE ===== */}
+      {page === 'find' && (
+        <div style={{ padding: '30px' }}>
+          <button onClick={() => setPage('dashboard')} style={{ background: 'none', border: 'none', color: '#22c55e' }}>← Back to Dashboard</button>
+          <h2 style={{ fontSize: '24px', marginTop: '15px' }}>Module 3 & 4: Matching + Location / Traffic Analysis</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginTop: '20px' }}>
+            <div style={{ background: '#18181b', padding: '20px', borderRadius: '12px' }}>
+              <h3>Live Food Feed - Matching Output (No ML Logic)</h3>
+              <p style={{ fontSize: '12px', color: '#9ca3af' }}>Filter available + Not expired + Haversine Distance + Sort by expiry</p>
+              <div style={{ marginTop: '12px', background: 'black', padding: '12px', borderRadius: '8px' }}>Veg Meals - 30 plates - 2.1km - Mattuthavani - <span style={{ color: '#22c55e' }}>Claimed</span></div>
+              <div style={{ marginTop: '10px', background: 'black', padding: '12px', borderRadius: '8px' }}>Parotta & Kuruma - 0.8km - Simmakkal - <span style={{ color: '#22c55e' }}>Claimed</span></div>
+            </div>
+            <div style={{ background: '#18181b', padding: '20px', borderRadius: '12px' }}>
+              <h3>Live Map - Leaflet OpenStreetMap</h3>
+              <div style={{ marginTop: '15px', height: '180px', background: 'black', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666' }}>Madurai Map - Donor Pins + Beneficiary Pins - Distance via Haversine</div>
+            </div>
+          </div>
+        </div>
+      )}
 
-function haversine(lat1,lon1,lat2,lon2){
- const R=6371; const dLat=(lat2-lat1)*Math.PI/180; const dLon=(lon2-lon1)*Math.PI/180;
- const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
- return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+      {/* ===== NOTIFY MODULE ===== */}
+      {page === 'notify' && (
+        <div style={{ padding: '30px' }}>
+          <button onClick={() => setPage('dashboard')} style={{ background: 'none', border: 'none', color: '#22c55e' }}>← Back to Dashboard</button>
+          <h2 style={{ fontSize: '24px', marginTop: '15px' }}>Module 5: Notification / Output & Monitoring</h2>
+          <div style={{ background: '#18181b', padding: '20px', borderRadius: '12px', width: '400px', marginTop: '20px' }}>
+            <div style={{ background: 'black', padding: '10px', borderRadius: '8px', marginBottom: '10px' }}>🔔 New food near you - Veg Meals 2.1km - Unread</div>
+            <div style={{ background: 'black', padding: '10px', borderRadius: '8px', marginBottom: '10px' }}>✅ Your food claimed by NGO - Read</div>
+            <div style={{ background: 'black', padding: '10px', borderRadius: '8px' }}>⚠️ Food expired - Removed</div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
 }
-function getLoc(){
- navigator.geolocation.getCurrentPosition(p=>{
-   document.getElementById('uLat').value=p.coords.latitude.toFixed(4);
-   document.getElementById('uLng').value=p.coords.longitude.toFixed(4);
-   document.getElementById('bLat').value=p.coords.latitude.toFixed(4);
-   document.getElementById('bLng').value=p.coords.longitude.toFixed(4);
-   map.setView([p.coords.latitude,p.coords.longitude],13);
-   addNotif('Location captured via browser geolocation API','system');
- });
-}
-function register(){
- const u={id:Date.now(),name:uName.value,role:uRole.value,phone:uPhone.value,email:uEmail.value,addr:uAddr.value,lat:parseFloat(uLat.value)||9.9252,lng:parseFloat(uLng.value)||78.1198,pass:'hashed_'+Date.now()};
- users.push(u); localStorage.setItem('unavo_users',JSON.stringify(users));
- curRole=u.role; document.getElementById('curRole').innerText=curRole;
- addNotif(`New ${u.role} registered: ${u.name}`,'new_user');
- alert('Profile created! Role = '+u.role+' | Redirect to '+u.role+' dashboard logic done!');
-}
-function addFood(){
- const f={id:Date.now(),donor_id:1,food_name:fName.value||'Mixed Food',quantity:fQty.value||'10 plates',food_type:fType.value,expiry:fExp.value||new Date(Date.now()+3*3600000).toISOString().slice(0,16),pickup_location:fLoc.value||'Madurai',status:'available',lat:9.9252+(Math.random()-0.5)*0.05,lng:78.1198+(Math.random()-0.5)*0.05};
- foods.unshift(f); save(); addNotif(`New food listed nearby: ${f.food_name} at ${f.pickup_location}`,'new_food');
-}
-function runMatching(){
- const blat=parseFloat(bLat.value)||9.9252; const blng=parseFloat(bLng.value)||78.1198;
- let list=foods.filter(f=>f.status==='available').map(f=>({...f,dist:haversine(blat,blng,f.lat,f.lng)})).filter(f=>f.dist<15).sort((a,b)=> new Date(a.expiry)-new Date(b.expiry) || a.dist-b.dist);
- foods=list.concat(foods.filter(f=>f.status!=='available'));
- render(list);
- addNotif(`Matching ran: ${list.length} foods found sorted by expiry + distance`,'match');
-}
-function render(list=foods){
- const c=document.getElementById('foodList'); c.innerHTML='';
- (list.length?list:foods).forEach(f=>{
-   const exp=new Date(f.expiry); const hrsLeft=((exp-new Date())/3600000).toFixed(1);
-   c.innerHTML+=`<div class="food-item"><span class="status ${f.status}">${f.status} ${f.dist?f.dist.toFixed(1)+'km':''}</span><h4>${f.food_name}</h4><p style="font-size:0.75rem;color:#8aa08a;margin:6px 0">${f.quantity} • ${f.food_type} • Exp: ${f.expiry.slice(0,16)} • ${hrsLeft}h left</p><p style="font-size:0.7rem">📍 ${f.pickup_location}</p><button class="btn btn-green" style="margin-top:10px;padding:6px 12px;font-size:0.75rem" onclick="claim(${f.id})">${f.status==='available'?'Claim → claimed + notify donor':'Claimed'}</button></div>`;
- });
-}
-function claim(id){
- const f=foods.find(x=>x.id===id); if(!f||f.status!=='available') return;
- f.status='claimed'; save(); addNotif(`Food claimed by NGO/Beneficiary: ${f.food_name} → notify donor`,'claim_confirmed');
-}
-function addNotif(msg,type){
- notifs.unshift({id:Date.now(),message:msg,type,status:'unread',time:new Date().toLocaleTimeString()});
- if(notifs.length>20) notifs.pop(); localStorage.setItem('unavo_notifs',JSON.stringify(notifs)); updateBell(); renderNotif();
-}
-function updateBell(){document.getElementById('bellCount').innerText=notifs.filter(n=>n.status==='unread').length;}
-function renderNotif(){document.getElementById('notifList').innerHTML=notifs.map(n=>`<div class="notif-item"><b>[${n.type}]</b> ${n.message}<br><span style="font-size:0.65rem;color:#6a7a6a">${n.time}</span></div>`).join('');}
-function toggleNotif(){const p=document.getElementById('notifPanel');p.style.display=p.style.display==='block'?'none':'block'; notifs.forEach(n=>n.status='read'); localStorage.setItem('unavo_notifs',JSON.stringify(notifs)); updateBell();}
-function setTab(t){document.getElementById('signupForm').style.display=t==='signup'?'block':'none';document.getElementById('listForm').style.display=t==='list'?'block':'none';document.getElementById('matchForm').style.display=t==='match'?'block':'none';document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',['signup','list','match'][i]===t));}
-function switchRole(){const roles=['donor','NGO','volunteer','beneficiary']; curRole=roles[(roles.indexOf(curRole)+1)%4]; document.getElementById('curRole').innerText=curRole; addNotif(`Switched dashboard view to: ${curRole}`,'system');}
-function save(){localStorage.setItem('unavo_foods',JSON.stringify(foods)); render(); refreshMap();}
-// expiry checker cron simulation
-setInterval(()=>{let changed=false; foods.forEach(f=>{if(f.status==='available' && new Date(f.expiry)<new Date()){f.status='expired';changed=true; addNotif(`Food expired: ${f.food_name} → status=expired`,'urgent');}}); if(changed) save();},60000);
-render(); renderNotif(); updateBell();
-</script>
-</body>
-</html>
